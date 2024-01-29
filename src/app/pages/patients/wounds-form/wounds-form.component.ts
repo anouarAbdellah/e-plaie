@@ -59,7 +59,6 @@ export class WoundsFormComponent implements OnInit {
     private modalService: NgbModal,
     private _snackBar: MatSnackBar
     ) {
-      this.data.patient_id = this.patient?.id;
     }
 
   ngOnInit(): void {
@@ -116,6 +115,7 @@ export class WoundsFormComponent implements OnInit {
         this.data.prescriptions = await Utils.convertFilesToBase64(this.data.prescriptions);
       }
     }
+    this.data.patient_id = this.patient?.id;
     this.isLoading = true;
     if (this.selectedElement) {
       this.woundsService.update(this.selectedElement.id, this.data).subscribe(
