@@ -1,0 +1,22 @@
+.remove-option {
+    width: 20px;
+    height: 20px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    border-radius: 50%;
+    border: none;
+    background: #d9082f;
+    color: #fff;
+    margin-left: 13px;
+    cursor: pointer;
+}
+.full-width {
+    width: 100%;
+}
+.isolated-section {
+    padding: 10px 10px 35px 3px;
+    margin: 14px 0px;
+    border: 1px solid grey;
+    border-radius: 10px;
+}

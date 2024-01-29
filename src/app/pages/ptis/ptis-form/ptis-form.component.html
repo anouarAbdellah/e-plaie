@@ -1,0 +1,93 @@
+<app-base-modal [title]="title" (closingEvent)="onClose()" (submit)="onSubmit()" [isLoading]="isLoading">
+    <form #f="ngForm">
+        <div class="row">
+            <div class="col-md-6">
+                <div class="form-group">
+                    <input type="text" name="code" required [(ngModel)]="data.code" class="form-control form-control-alternative"
+                        placeholder="Code"  #code="ngModel">
+                    <div class="error-message" *ngIf="code.invalid && code.touched">
+                        Code est requis.
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-6">
+                <div class="form-group">
+                    <input type="text" name="name" required [(ngModel)]="data.name" class="form-control form-control-alternative"
+                        placeholder="Nom" #name="ngModel">
+                    <div class="error-message" *ngIf="name.invalid && name.touched">
+                        Nom est requis.
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-6">
+                <div class="form-group">
+                    <select name="etiology" required [(ngModel)]="data.etiology" class="form-control form-control-alternative"
+                        placeholder="Type" #etiology="ngModel">
+                        <option value="" disabled>Type</option>
+                        <option [value]="etio" *ngFor="let etio of etiologies">{{etio}}</option>
+                    </select>
+                    <div class="error-message" *ngIf="etiology.invalid && etiology.touched">
+                        Etiologie est requis.
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-6 d-flex align-items-center">
+                <div class="form-group d-flex mb-0">
+                    <span class="mr-2">Enabled:</span>
+                    <label class="custom-toggle mb-0">
+                        <input type="checkbox" (click)="toggleStatus()" [checked]="data.enabled">
+                        <span class="custom-toggle-slider rounded-circle"></span>
+                    </label>
+                </div>
+            </div>
+            <div class="col-md-6">
+                <div class="form-group">
+                    <label for="images">Images</label>
+                    <input type="file" id="images" name="images" multiple class="form-control form-control-alternative" placeholder="Images" (change)="onChangeFiles($event, 'images')">
+                </div>
+                <div class="default-images">
+                    <div class="default-image-item" *ngFor="let imageItem of defaultImages">
+                        <button class="remove-item" (click)="onRemoveFile(imageItem.id, 'image')"><i class="fas fa-times"></i></button>
+                        <img [src]="assetLink(imageItem.path)">
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-6">
+                <div class="form-group">
+                    <label for="videos">Videos</label>
+                    <input type="file" id="videos" name="videos" multiple class="form-control form-control-alternative" placeholder="Videos" (change)="onChangeFiles($event, 'videos')">
+                </div>
+                <div class="default-videos">
+                    <div class="default-video-item" *ngFor="let videoItem of defaultVideos">
+                        <button class="remove-item" (click)="onRemoveFile(videoItem.id, 'video')"><i class="fas fa-times"></i></button>
+                        <video [src]="assetLink(videoItem.path)" controls> </video>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-12">
+                <div class="text-right">
+                    <button class="btn btn-danger" (click)="onAddLink()"><i class="fab fa-youtube"></i> Ajouter lien YouTube</button>
+                </div>
+                <div class="links-holder">
+                    <div class="link-item" *ngFor="let linkItem of data.links; let i = index">
+                        <input type="text" name="link-item-{{i}}" class="form-control" [value]="linkItem" (change)="onChangeLink($event, i)">
+                        <button class="link-remove" (click)="onRemoveLink(i)"><i class="fas fa-times"></i></button>
+                    </div>
+                </div>
+                <div class="default-links">
+                    <div class="default-link-item" *ngFor="let linkItem of defaultLinks">
+                        <button class="remove-item" (click)="onRemoveFile(linkItem.id, 'link')"><i class="fas fa-times"></i></button>
+                        <div [innerHTML]="getCleanLink(linkItem.path)" class="youtube-holder"></div>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-12">
+                <ckeditor required name="description" [(ngModel)]="data.description" placeholder="Description" #description="ngModel"></ckeditor>
+                <div class="error-message" *ngIf="description.invalid && description.touched">
+                    Description est requis.
+                </div>
+            </div>
+        </div>
+    </form>
+
+</app-base-modal>

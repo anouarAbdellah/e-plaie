@@ -1,0 +1,50 @@
+.links-holder {
+    padding: 10px;
+}
+.link-item {
+    display: flex;
+    align-items: center;
+    margin-bottom: 10px;
+}
+.link-remove {
+    width: 40px;
+    height: 40px;
+    border-radius: 50%;
+    font-size: 17px;
+    border: 1px solid #484848;
+    color: #484848;
+    margin-left: 24px;
+    cursor: pointer;
+}
+.default-images, .default-videos, .default-links {
+    display: flex;
+    align-items: center;
+    justify-content: start;
+    flex-wrap: wrap;
+}
+.default-image-item, .default-video-item, .default-link-item {
+    margin: 10px;
+    position: relative;
+    width: 180px;
+    height: 180px;
+    border: 1px solid;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+button.remove-item {
+    position: absolute;
+    right: -10px;
+    top: -10px;
+    border-radius: 50%;
+    width: 27px;
+    height: 27px;
+    font-size: 14px;
+    text-align: center;
+    padding: 0px;
+    cursor: pointer;
+}
+.default-image-item img, .default-video-item video {
+    max-width: 100%;
+    max-height: 100%;
+}

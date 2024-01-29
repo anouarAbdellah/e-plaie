@@ -1,0 +1,232 @@
+
+<div class="header bg-gradient-info pb-8 pt-5 pt-md-8">
+    <!-- Header container -->
+    <div class="container-fluid" *ngIf="!isLoading">
+      <div class="row">
+        <div class="col-lg-7 col-md-10">
+            <h1 class="display-2 text-white">{{patient.firstname + " " + patient.lastname}}</h1>
+            <button type="button" mat-raised-button color="primary" (click)="onOpenForm('edit')">
+                Modifier
+            </button>
+            <button type="button" mat-raised-button color="accent" class="ml-2" (click)="onOpenForm('wound')">
+                Ajouter une plaie
+            </button>
+        </div>
+      </div>
+    </div>
+</div>
+<div class="container-fluid mt--7">
+    
+    <div class="row" *ngIf="isLoading">
+        <div class="col-sm-12">
+            <div class="loading-holder">
+                <mat-spinner [diameter]="30" style="margin-right: 10px;"></mat-spinner> {{'LOADING' | translate}}
+            </div>
+        </div>
+    </div>
+    <div class="row" *ngIf="!isLoading">
+        <div class="col-xl-4 order-xl-2 mb-5 mb-xl-0">
+            <div class="card card-profile shadow">
+                <div class="card-body pt-0 pt-md-4">
+                    <div class="row">
+                        <div class="col">
+                            <div class="card-profile-stats d-flex justify-content-center mt-md-5">
+                            <div>
+                                <span class="heading">{{patient.antecedents?.length || 0}}</span>
+                                <span class="description">Antécédents</span>
+                            </div>
+                            <div>
+                                <span class="heading">10</span>
+                                <span class="description">Seances passe</span>
+                            </div>
+                            <div>
+                                <span class="heading">89</span>
+                                <span class="description">Seances rate</span>
+                            </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="text-center">
+                        <h3>
+                            {{patient.firstname + " " + patient.lastname}}<span class="font-weight-light">, {{getAge()}}</span>
+                        </h3>
+                        <div class="h5 font-weight-300">
+                            <i class="ni location_pin mr-2"></i>{{patient.gender}}
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="col-xl-8 order-xl-1">
+            <div class="card bg-secondary shadow">
+                <div class="card-header bg-white border-0">
+                    <div class="row align-items-center">
+                        <div class="col-8">
+                            <h3 class="mb-0">Infos</h3>
+                        </div>
+                    </div>
+                </div>
+                <div class="card-body">
+                    <mat-tab-group>
+                        <mat-tab label="Infos générales">
+                            <div class="card-body">
+                                <div class="container-fluid">
+                                    <div class="row">
+                                        <div class="col-lg-6 p-2">
+                                            <strong>Nom:</strong> {{patient.lastname}}
+                                        </div>
+                                        <div class="col-lg-6 p-2">
+                                            <strong>Prenom:</strong> {{patient.firstname}}
+                                        </div>
+                                        <div class="col-lg-6 p-2">
+                                            <strong>Cabinet:</strong> {{patient.cabinet?.name}}
+                                        </div>
+                                        <div class="col-lg-6 p-2">
+                                            <strong>Médecin:</strong> {{patient.doctor?.name}}
+                                        </div>
+                                        <div class="col-lg-6 p-2">
+                                            <strong>Date de naissance:</strong> {{patient.birthday}}
+                                        </div>
+                                        <div class="col-lg-6 p-2">
+                                            <strong>Téléphone:</strong> {{patient.phone_number}}
+                                        </div>
+                                        <div class="col-lg-6 p-2">
+                                            <strong>Sexe:</strong> {{patient.gender}}
+                                        </div>
+                                        <div class="col-lg-6 p-2">
+                                            <strong>Email:</strong> {{patient.email}}
+                                        </div>
+                                        <div class="col-lg-6 p-2">
+                                            <strong>Situation familiale:</strong> {{patient.civility}}
+                                        </div>
+                                        <div class="col-lg-6 p-2">
+                                            <strong>Assurance:</strong> {{patient.assurance}}
+                                        </div>
+                                        <div class="col-lg-6 p-2">
+                                            <strong>Groupe sanguin:</strong> {{patient.blood_type}}
+                                        </div>
+                                        <div class="col-lg-6 p-2">
+                                            <strong>Note:</strong> {{patient.note}}
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </mat-tab>
+                        <mat-tab label="Antécédents">
+                            <div class="card-body">
+                                <div class="container-fluid">
+                                    <div class="row detail-elements" *ngFor="let antecedent of patient.antecedents">
+                                        <div class="col-lg-6 p-2">
+                                            <strong>Type d'antécédent:</strong> {{antecedent.antecedent?.name}}
+                                        </div>
+                                        <div class="col-lg-6 p-2">
+                                            <strong>Intitulé:</strong> {{antecedent.title}}
+                                        </div>
+                                        <div class="col-lg-6 p-2">
+                                            <strong>Date de début:</strong> {{antecedent.start_date}}
+                                        </div>
+                                        <div class="col-lg-6 p-2">
+                                            <strong>Date de fin:</strong> {{antecedent.end_date}}
+                                        </div>
+                                        <hr>
+                                    </div>
+                                </div>
+                            </div>
+                        </mat-tab>
+                        <mat-tab label="Historiques des ordonnances">
+                            <div class="card-body">
+                                <div class="container-fluid">
+                                    <div class="row detail-elements" *ngFor="let prescription of patient.prescriptions">
+                                        <div class="col-lg-6 p-2">
+                                            <strong>Type:</strong> {{prescription.type}}
+                                        </div>
+                                        <div class="col-lg-6 p-2">
+                                            <strong>Date:</strong> {{prescription.date}}
+                                        </div>
+                                        <div class="col-md-12 d-flex images-container">
+                                            <div class="image-holder" *ngFor="let image of prescription.images; let imageKey = index">
+                                                <img [src]="image.image" />
+                                            </div>
+                                        </div>
+                                        <hr>
+                                    </div>
+                                </div>
+                            </div>
+                        </mat-tab>
+                        <mat-tab label="Historique des bilans et examens">
+                            <div class="card-body">
+                                <div class="container-fluid">
+                                    <div class="row detail-elements" *ngFor="let bilan of patient.bilans">
+                                        <div class="col-lg-6 p-2">
+                                            <strong>Type:</strong> {{bilan.type}}
+                                        </div>
+                                        <div class="col-lg-6 p-2">
+                                            <strong>Date:</strong> {{bilan.date}}
+                                        </div>
+                                        <div class="col-md-12 d-flex images-container">
+                                            <div class="image-holder" *ngFor="let image of bilan.images; let imageKey = index">
+                                                <img [src]="image.image" />
+                                            </div>
+                                        </div>
+                                        <hr>
+                                    </div>
+                                </div>
+                            </div>
+                        </mat-tab>
+                        <mat-tab label="Plaies">
+                            <div class="card-body">
+                                <div class="container-fluid">
+                                    <div class="row detail-elements" *ngFor="let wound of patient.wounds">
+                                        <div class="col-lg-6 p-2">
+                                            <strong>Type:</strong> {{wound.type}}
+                                        </div>
+                                        <div class="col-lg-6 p-2">
+                                            <strong>Etiologie:</strong> {{wound.etiologie}}
+                                        </div>
+                                        <div class="col-lg-6 p-2">
+                                            <strong>Zone:</strong> {{wound.zone}}
+                                        </div>
+                                        <div class="col-lg-6 p-2">
+                                            <strong>Nombre de soins:</strong> {{wound.etiologie}}
+                                        </div>
+                                        <div class="col-lg-6 p-2">
+                                            <strong>Type de durée:</strong> {{wound.etiologie}}
+                                        </div>
+                                        <div class="col-lg-6 p-2">
+                                            <strong>Durée:</strong> {{wound.etiologie}}
+                                        </div>
+                                        <div class="col-lg-6 p-2">
+                                            <strong>Date de début des soins:</strong> {{wound.date}}
+                                        </div>
+                                        <div class="col-md-12 d-flex images-container">
+                                            <div class="image-holder" *ngFor="let image of wound.prescriptions; let imageKey = index">
+                                                <img [src]="image.file" />
+                                            </div>
+                                        </div>
+                                        <hr>
+                                    </div>
+                                </div>
+                            </div>
+                        </mat-tab>
+                    </mat-tab-group>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<app-patients-form
+    *ngIf="showingForms.edit"
+    [id]="id"
+    (closingEvent)="onClose()"
+    (reloadEvent)="getUpdatedData()"
+    [selectedElement]="patient"
+    ></app-patients-form>
+<app-wounds-form
+    *ngIf="showingForms.wound"
+    [id]="selectedWound"
+    [patient]="patient"
+    (closingEvent)="onClose()"
+    (reloadEvent)="getUpdatedData()"
+    [selectedElement]="selectedWound"
+    ></app-wounds-form>

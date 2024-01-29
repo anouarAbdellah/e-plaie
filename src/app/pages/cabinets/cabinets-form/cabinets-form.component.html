@@ -1,0 +1,104 @@
+<app-base-modal [title]="title" (closingEvent)="onClose()" (submit)="onSubmit()" [isLoading]="isLoading">
+    <form #f="ngForm">
+        <div class="row">
+            <div class="col-md-6">
+                <div class="form-group">
+                    <input type="text" name="code" required [(ngModel)]="data.code" class="form-control form-control-alternative"
+                        placeholder="Code"  #code="ngModel">
+                    <div class="error-message" *ngIf="code.invalid && code.touched">
+                        Code est requis.
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-6">
+                <div class="form-group">
+                    <input type="text" name="name" required [(ngModel)]="data.name" class="form-control form-control-alternative"
+                        placeholder="Nom" #name="ngModel">
+                    <div class="error-message" *ngIf="name.invalid && name.touched">
+                        Nom est requis.
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-6">
+                <div class="form-group">
+                    <select name="type" required [(ngModel)]="data.type" class="form-control form-control-alternative"
+                        placeholder="Type" #type="ngModel">
+                        <option value="" disabled>Type</option>
+                        <option value="cabinet">Cabinet</option>
+                        <option value="clinique">Clinique</option>
+                        <option value="polyclinique">Polyclinique</option>
+                    </select>
+                    <div class="error-message" *ngIf="type.invalid && type.touched">
+                        Type est requis.
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-6">
+                <div class="form-group">
+                    <select name="speciality" required [(ngModel)]="data.speciality" class="form-control form-control-alternative"
+                        placeholder="Spécialité" #speciality="ngModel">
+                        <option value="" disabled>Spécialité</option>
+                        <option [value]="spec" *ngFor="let spec of specialities">{{spec}}</option>
+                    </select>
+                    <div class="error-message" *ngIf="speciality.invalid && speciality.touched">
+                        Spécialité est requis.
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-6">
+                <div class="form-group">
+                    <input type="text" name="address" [(ngModel)]="data.address"
+                        class="form-control form-control-alternative" placeholder="Adresse" #address="ngModel">
+                    <div class="error-message" *ngIf="address.invalid && address.touched">
+                        Adresse est requis.
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-6">
+                <div class="form-group">
+                    <input type="text" name="phone_number" [(ngModel)]="data.phone_number"
+                        class="form-control form-control-alternative" placeholder="Téléphone" #phone_number="ngModel">
+                    <div class="error-message" *ngIf="phone_number.invalid && phone_number.touched">
+                        Téléphone est requis.
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-6">
+                <div class="form-group">
+                    <input type="email" name="email" [(ngModel)]="data.email"
+                        class="form-control form-control-alternative" placeholder="Email" #email="ngModel">
+                    <div class="error-message" *ngIf="email.invalid && email.touched">
+                        Email est requis.
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-6">
+                <div class="form-group">
+                    <select name="city" [(ngModel)]="data.city" class="form-control form-control-alternative"
+                        placeholder="Ville" #city="ngModel">
+                        <option value="" disabled>Ville</option>
+                        <option [value]="ville" *ngFor="let ville of cities">{{ville}}</option>
+                    </select>
+                    <div class="error-message" *ngIf="city.invalid && city.touched">
+                        Ville est requis.
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-6">
+                <div class="form-group">
+                    <input type="file" name="logo" class="form-control form-control-alternative" placeholder="Logo" (change)="onChangeImage($event)">
+                </div>
+            </div>
+            <div class="col-md-6 d-flex align-items-center">
+                <div class="form-group d-flex mb-0">
+                    <span class="mr-2">Enabled:</span>
+                    <label class="custom-toggle mb-0">
+                        <input type="checkbox" (click)="toggleStatus()" [checked]="data.enabled">
+                        <span class="custom-toggle-slider rounded-circle"></span>
+                    </label>
+                </div>
+            </div>
+        </div>
+    </form>
+
+</app-base-modal>

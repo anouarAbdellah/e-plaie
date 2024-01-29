@@ -1,0 +1,60 @@
+<app-base-modal [title]="custom_module.name" (closingEvent)="onClose()" (submit)="onSubmit()" [isLoading]="isLoading">
+    <form #f="ngForm">
+        <div class="row">
+            <div class="{{field.type === 'long-text' ? 'col-md-12' : 'col-md-6'}}" *ngFor="let field of custom_module.fields">
+                <mat-form-field class="full-width" *ngIf="field.type === 'text'">
+                    <mat-label>{{field.name}}</mat-label>
+                    <input matInput placeholder="{{field.name}}" [name]="field.id" [required]="field.is_required" [(ngModel)]="data[field.id]">
+                </mat-form-field>
+                <mat-form-field class="full-width" *ngIf="field.type === 'long-text'">
+                    <mat-label>{{field.name}}</mat-label>
+                    <textarea matInput placeholder="{{field.name}}" [name]="field.id" [required]="field.is_required" [(ngModel)]="data[field.id]"></textarea>
+                </mat-form-field>
+                <mat-form-field class="full-width" *ngIf="field.type === 'select'">
+                    <mat-label>{{field.name}}</mat-label>
+                    <mat-select [name]="field.id" [required]="field.is_required" [(ngModel)]="data[field.id]">
+                        <mat-option [value]="option.value" *ngFor="let option of field.options; track option">{{option.value}}</mat-option>
+                    </mat-select>
+                </mat-form-field>
+                <mat-form-field class="full-width" *ngIf="field.type === 'multi-select'">
+                    <mat-label>{{field.name}}</mat-label>
+                    <mat-select [name]="field.id" multiple [required]="field.is_required" [(ngModel)]="data[field.id]">
+                        <mat-option [value]="option.value" *ngFor="let option of field.options; track option">{{option.value}}</mat-option>
+                    </mat-select>
+                </mat-form-field>
+            </div>
+            <div class="col-md-12 d-flex">
+                <button class="btn {{step.id != active_step ? 'btn-info' : 'btn-light'}}" *ngFor="let step of custom_module.steps" (click)="onActiveStepChange(step.id)">
+                    {{step.name}}
+                </button>
+            </div>
+            <div class="col-md-12 conatiner-fluid" *ngFor="let step of custom_module.steps">
+                <div class="row" [ngClass]="{hidden_step: step.id != active_step}">
+                    <div class="{{field.type === 'long-text' ? 'col-md-12' : 'col-md-6'}}" *ngFor="let field of step.fields">
+                        <mat-form-field class="full-width" *ngIf="field.type === 'text'">
+                            <mat-label>{{field.name}}</mat-label>
+                            <input matInput placeholder="{{field.name}}" [name]="field.id" [required]="field.is_required" [(ngModel)]="data.steps[step.id][field.id]">
+                        </mat-form-field>
+                        <mat-form-field class="full-width" *ngIf="field.type === 'long-text'">
+                            <mat-label>{{field.name}}</mat-label>
+                            <textarea matInput placeholder="{{field.name}}" [name]="field.id" [required]="field.is_required" [(ngModel)]="data.steps[step.id][field.id]"></textarea>
+                        </mat-form-field>
+                        <mat-form-field class="full-width" *ngIf="field.type === 'select'">
+                            <mat-label>{{field.name}}</mat-label>
+                            <mat-select [name]="field.id" [required]="field.is_required" [(ngModel)]="data.steps[step.id][field.id]">
+                                <mat-option [value]="option.value" *ngFor="let option of field.options; track option">{{option.value}}</mat-option>
+                            </mat-select>
+                        </mat-form-field>
+                        <mat-form-field class="full-width" *ngIf="field.type === 'multi-select'">
+                            <mat-label>{{field.name}}</mat-label>
+                            <mat-select [name]="field.id" multiple [required]="field.is_required" [(ngModel)]="data.steps[step.id][field.id]">
+                                <mat-option [value]="option.value" *ngFor="let option of field.options; track option">{{option.value}}</mat-option>
+                            </mat-select>
+                        </mat-form-field>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </form>
+
+</app-base-modal>

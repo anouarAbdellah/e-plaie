@@ -1,0 +1,25 @@
+<div class="card-header border-0 d-flex">
+    <div class="row" style="width: 100%;">
+        <div class="col-md-3 mb-1" *ngFor="let filter of filters">
+            <label class="label">{{filter.title}}</label>
+            <input *ngIf="filter.type == 'text' || filter.type == 'number'" [type]="filter.type" [name]="filter.name"
+                [placeholder]="filter.title" [(ngModel)]="filter.value" class="form-control">
+                <select *ngIf="filter.type == 'select'" [name]="filter.name"
+                    [placeholder]="filter.title" [(ngModel)]="filter.value" class="form-control">
+                    <option value="">Tous</option>
+                    <option [value]="filterElem" *ngFor="let filterElem of filter.elements">{{filterElem}}</option>
+                </select>
+                <select *ngIf="filter.type == 'status'" [name]="filter.name"
+                    [placeholder]="filter.title" [(ngModel)]="filter.value" class="form-control">
+                    <option value="">Tous</option>
+                    <option [value]="1">Activé</option>
+                    <option [value]="0">Désactivé</option>
+                </select>
+        </div>
+        <div class="col-md-12 mt-1 text-right">
+            <button class="btn btn-info" (click)="onFilter()">
+                Filtrer
+            </button>
+        </div>
+    </div>
+</div>

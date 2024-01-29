@@ -1,0 +1,161 @@
+<app-base-modal [title]="title" (closingEvent)="onClose()" [showSubmit]="false" [isLoading]="isLoading">
+    <form #f="ngForm">
+        <div class="row">
+            <div class="col-md-6">
+                <mat-form-field class="full-width">
+                    <mat-label>Type de plaie</mat-label>
+                    <mat-select name="type" required [(ngModel)]="data.type">
+                        <mat-option [value]="option" *ngFor="let option of wounds_type; track option">{{option}}</mat-option>
+                    </mat-select>
+                </mat-form-field>
+            </div>
+            <div class="col-md-6">
+                <mat-form-field class="full-width">
+                    <mat-label>Etiologie</mat-label>
+                    <mat-select name="wounds_type" required [(ngModel)]="data.etiologie">
+                        <mat-option [value]="option" *ngFor="let option of etiologies; track option">{{option}}</mat-option>
+                    </mat-select>
+                </mat-form-field>
+            </div>
+            <div class="col-md-6">
+                <mat-form-field class="full-width">
+                    <mat-label>Zone</mat-label>
+                    <mat-select name="zone" required [(ngModel)]="data.zone">
+                        <mat-option [value]="option" *ngFor="let option of wounds_zones; track option">{{option}}</mat-option>
+                    </mat-select>
+                </mat-form-field>
+            </div>
+            <div class="col-md-12">
+                <h6>Ordonnance/PT</h6>
+                <div class="container-fluid p-2">
+                    <div class="row">
+                        <div class="col-md-12">
+                            <button type="button" mat-raised-button color="primary" (click)="addPrescription()" [disabled]="isLoading">
+                                Ajouter Canvas d'ordonnance
+                            </button>
+                        </div>
+                        <div class="col-md-12 container-fluid prescription-canvas" *ngFor="let prescription of prescriptions; let key = index; trackBy: trackByFn">
+                            <div class="row" *ngIf="!prescriptions[key].generating">
+                                <div class="col-12 mt-2 text-right">
+                                    <button type="button" mat-mini-fab color="warn" aria-label="Supprimer" (click)="removePrescription(key)">
+                                        <mat-icon>clear</mat-icon>
+                                    </button>
+                                </div>
+                                <div class="col-6">
+                                    <mat-form-field class="full-width">
+                                        <mat-label>Canvas d'ordonnance</mat-label>
+                                        <mat-select name="type" name="canvas" required [(ngModel)]="prescriptions[key].canvas_id">
+                                            <mat-option [value]="option.id" *ngFor="let option of canvases; track option">{{option.name}}</mat-option>
+                                        </mat-select>
+                                    </mat-form-field>
+                                </div>
+                                <div class="col-12 mt-2 text-right">
+                                    <button type="button" mat-raised-button color="primary" (click)="addMedicine(key)" [disabled]="isLoading">
+                                        Ajouter Médicaments
+                                    </button>
+                                </div>
+                                <div class="col-md-12 container-fluid" *ngFor="let medicine of prescriptions[key].medicines; let medicineKey = index; trackBy: trackByFn">
+                                    <div class="row">
+                                        <div class="col-6">
+                                            <mat-form-field class="full-width">
+                                                <mat-label>Médicament</mat-label>
+                                                <mat-select name="type" required name="medicine[]" [(ngModel)]="prescriptions[key].medicines[medicineKey].medicine_id">
+                                                    <mat-option [value]="option.id" *ngFor="let option of medicines; track option">{{option.name}}</mat-option>
+                                                </mat-select>
+                                            </mat-form-field>
+                                        </div>
+                                        <div class="col-md-6">
+                                            <mat-form-field class="full-width">
+                                                <mat-label>Posologie</mat-label>
+                                                <input matInput placeholder="Posologie" required name="posologie[]" [(ngModel)]="prescriptions[key].medicines[medicineKey].posologie">
+                                            </mat-form-field>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="row" id="prescription-preview" *ngIf="prescriptions[key].generating">
+                                <div class="col-md-6 perscription-logo-holder">
+                                    <img class="perscription-logo" style="max-width: 100%;" [src]="prescriptions[key].canvas?.logo ? url + '/storage/' + prescriptions[key].canvas?.logo : '/assets/img/brand/red.png'" >
+                                </div>
+                                <div class="col-md-6 perscription-header-holder">
+                                    <div class="perscription-header" [innerHTML]="prescriptions[key].canvas?.head"></div>
+                                </div>
+                                <div class="col-md-12 perscription-body-holder">
+                                    <div class="perscription-body" [innerHTML]="prescriptions[key].canvas?.body"></div>
+                                </div>
+                                <div class="col-md-12 perscription-body-holder">
+                                    <div class="p-1" *ngFor="let medicine of prescriptions[key].medicines">
+                                        <span>
+                                            {{medicine.medicine?.name}} {{medicine.posologie}}
+                                        </span>
+                                    </div>
+                                </div>
+                                <div class="col-md-12 perscription-footer-holder">
+                                    <div class="perscription-footer" [innerHTML]="prescriptions[key].canvas?.footer"></div>
+                                </div>
+                            </div>
+                            <div class="row" *ngIf="prescriptions[key].canvas_id">
+                                <div class="col-12 mt-2 text-right">
+                                    <button type="button" mat-raised-button color="primary" (click)="generatePrescription(key)" *ngIf="!prescriptions[key].generating" [disabled]="isLoading">
+                                        Generer ordonnance
+                                    </button>
+                                    <button type="button" mat-raised-button color="primary" (click)="generatePrescription(key)" *ngIf="prescriptions[key].generating" [disabled]="isLoading">
+                                        Annuler
+                                    </button>
+                                    <button type="button" mat-raised-button color="primary" class="ml-2" (click)="confirmGeneratePrescription(key)" *ngIf="prescriptions[key].generating" [disabled]="isLoading">
+                                        Confirmer
+                                    </button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-12">
+                <ngx-dropzone 
+                    (change)="onSelectElementImage($event, 'prescriptions')" 
+                    [accept]="'image/*'" 
+                    [multiple]="true">
+                    <ngx-dropzone-image-preview ngProjectAs="ngx-dropzone-preview" *ngFor="let f of data.prescriptions" [file]="f" [removable]="true" (removed)="onRemoveElementImage(f, 'prescriptions')"></ngx-dropzone-image-preview>
+                    <ngx-dropzone-label>Glissez et déposez vos images ici!</ngx-dropzone-label>
+                </ngx-dropzone>
+            </div>
+            <div class="col-md-6">
+                <mat-form-field class="full-width">
+                    <mat-label>Nombre de soins</mat-label>
+                    <input matInput placeholder="Nombre de soins" name="treatments_count" [(ngModel)]="data.treatments_count">
+                </mat-form-field>
+            </div>
+            <div class="col-md-6">
+                <mat-form-field class="full-width">
+                    <mat-label>Type de durée</mat-label>
+                    <mat-select name="duration_type" [(ngModel)]="data.duration_type">
+                        <mat-option [value]="option" *ngFor="let option of duration_types; track option">{{option}}</mat-option>
+                    </mat-select>
+                </mat-form-field>
+            </div>
+            <div class="col-md-6">
+                <mat-form-field class="full-width">
+                    <mat-label>Durée</mat-label>
+                    <input matInput placeholder="Durée" name="duration" [(ngModel)]="data.duration">
+                </mat-form-field>
+            </div>
+            <div class="col-md-6">
+                <mat-form-field class="full-width">
+                    <mat-label>Date de début des soins</mat-label>
+                    <input matInput [matDatepicker]="picker" [(ngModel)]="data.date">
+                    <mat-hint>MM/DD/YYYY</mat-hint>
+                    <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
+                    <mat-datepicker #picker></mat-datepicker>
+                </mat-form-field>
+            </div>
+        
+            <div class="col-md-12 text-right mt-2">
+                <button type="button" mat-raised-button color="primary" (click)="onSubmit()" [disabled]="isLoading">
+                    <mat-spinner [diameter]="30" style="margin-right: 10px;" *ngIf="isLoading"></mat-spinner> Sauvegarder
+                </button>
+            </div>
+        </div>
+    </form>
+
+</app-base-modal>

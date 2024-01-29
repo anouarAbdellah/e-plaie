@@ -1,0 +1,38 @@
+<div class="header bg-gradient-info pb-8 pt-5 pt-md-8">
+    <div class="container-fluid">
+        <div class="header-body">
+        </div>
+    </div>
+</div>
+<!-- Page content -->
+<div class="container-fluid mt--7">
+    <!-- Table -->
+    <div class="row">
+        <div class="col">
+            <div class="card shadow">
+                <div class="card-header border-0 d-flex">
+                    <h3 class="mb-0">PTI</h3>
+                    <div class="ml-auto">
+                        <button class="btn btn-primary" (click)="onAdd()">
+                            Ajouter
+                        </button>
+                        <button class="btn btn-success ml-2" (click)="exportData()">
+                            Export
+                        </button>
+                    </div>
+                </div>
+                <app-base-filter [filters]="filtersElements" (onFilterChange)="onFiltersChange($event)"></app-base-filter>
+                <app-base-table (onEdit)="onEdit($event)" [tableData]="tableData" [data]="data" [isLoading]="isLoading" (onToggleStatus)="toggleStatusChange($event)" ></app-base-table>
+                <app-pagination-links [page]="page" [pagesCount]="pagesCount" (onPageChange)="onPageChange($event)"></app-pagination-links>
+            </div>
+        </div>
+    </div>
+</div>
+
+<app-ptis-form
+    *ngIf="isShowForm"
+    [id]="selectedElement"
+    (closingEvent)="onClose()"
+    (reloadEvent)="onFormReload()"
+    [selectedElement]="selectedElement"
+    ></app-ptis-form>

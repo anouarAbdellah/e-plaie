@@ -1,0 +1,185 @@
+<app-base-modal [title]="title" (closingEvent)="onClose()" (submit)="onSubmit()" [isLoading]="isLoading">
+    <form #f="ngForm">
+        <div class="row">
+            <div class="col-md-6">
+                <mat-form-field class="full-width">
+                    <mat-label>Nom</mat-label>
+                    <input matInput placeholder="Nom" name="name" [(ngModel)]="data.name" #name="ngModel" required>
+                    <mat-error *ngIf="name.invalid && name.touched">Nom est requis.</mat-error>
+                </mat-form-field>
+            </div>
+            <div class="col-md-6">
+                <mat-form-field class="full-width">
+                    <mat-label>Icon</mat-label>
+                    <input matInput placeholder="Icon" name="icon" [(ngModel)]="data.icon" #icon="ngModel">
+                </mat-form-field>
+            </div>
+            <hr />
+            <div class="col-12 text-right">
+                <button type="button" class="btn btn-primary" (click)="addField()">
+                    Ajouter un champ
+                </button>
+            </div>
+            <div class="col-12 container-fluid" *ngFor="let field of fields; let i = index">
+                <div class="row isolated-section">
+                    <div class="col-12 mt-2 text-right">
+                        <button type="button" mat-mini-fab color="warn" (click)="removeField(i)" aria-label="Supprimer le champs">
+                            <mat-icon>clear</mat-icon>
+                        </button>
+                    </div>
+                    <div class="col-md-6">
+                        <mat-form-field class="full-width">
+                            <mat-label>Nom</mat-label>
+                            <input matInput placeholder="Nom" name="field_name[]" required [(ngModel)]="fields[i].name">
+                        </mat-form-field>
+                    </div>
+                    <div class="col-md-6">
+                        <mat-form-field class="full-width">
+                            <mat-label>Type</mat-label>
+                            <mat-select name="field_type[]" required [(ngModel)]="fields[i].type">
+                                <mat-option [value]="antType" *ngFor="let antType of types; track antType">{{antType}}</mat-option>
+                            </mat-select>
+                        </mat-form-field>
+                    </div>
+                    <div class="col-12" *ngIf="field.type === 'select' || field.type === 'multi-select'">
+                        <div class="row">
+                            <div class="col-12 text-right" >
+                                <button type="button" class="btn btn-primary" (click)="addOption(i)">
+                                    Ajouter une option
+                                </button>
+                            </div>
+                            <div class="col-4" *ngFor="let option of field.options; let option_index = index">
+                                <div class="form-group d-flex align-items-center">
+                                    <mat-form-field class="full-width">
+                                        <mat-label>Option</mat-label>
+                                        <input matInput placeholder="Option" name="field_option[]" required [(ngModel)]="fields[i].options[option_index].value">
+                                    </mat-form-field>
+                                    <button type="button" mat-mini-fab color="warn" (click)="removeOption(i, option_index)" aria-label="Supprimer">
+                                        <mat-icon>remove</mat-icon>
+                                    </button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="col-md-6 d-flex align-items-center">
+                        <div class="form-group d-flex mb-0">
+                            <span class="mr-2">Requis:</span>
+                            <label class="custom-toggle mb-0">
+                                <input type="checkbox" (click)="toggleFieldCheckbox(i, 'is_required')" [checked]="fields[i].is_required">
+                                <span class="custom-toggle-slider rounded-circle"></span>
+                            </label>
+                        </div>
+                    </div>
+                    <div class="col-md-6 d-flex align-items-center">
+                        <div class="form-group d-flex mb-0">
+                            <span class="mr-2">Afficher dans la liste:</span>
+                            <label class="custom-toggle mb-0">
+                                <input type="checkbox" (click)="toggleFieldCheckbox(i, 'show_in_list')" [checked]="fields[i].show_in_list">
+                                <span class="custom-toggle-slider rounded-circle"></span>
+                            </label>
+                        </div>
+                    </div>
+                </div>
+                
+            </div>
+            <hr />
+            <div class="col-12 text-right">
+                <button type="button" class="btn btn-primary" (click)="addStep()">
+                    Ajouter une etape
+                </button>
+            </div>
+            <div class="col-12 container-fluid" *ngFor="let step of steps; let i = index">
+                <div class="row isolated-section">
+                    <div class="col-12 mt-2 text-right">
+                        <button type="button" mat-mini-fab color="warn" (click)="removeStep(i)" aria-label="Supprimer l'etape">
+                            <mat-icon>clear</mat-icon>
+                        </button>
+                    </div>
+                    <div class="col-md-6">
+                        <mat-form-field class="full-width">
+                            <mat-label>Nom</mat-label>
+                            <input matInput placeholder="Nom" name="step_name[]" required [(ngModel)]="steps[i].name">
+                        </mat-form-field>
+                    </div>
+                    <div class="col-md-6">
+                        <mat-form-field class="full-width">
+                            <mat-label>Ordre</mat-label>
+                            <input type="number" matInput placeholder="Ordre" name="step_order[]" required [(ngModel)]="steps[i].order">
+                        </mat-form-field>
+                    </div>
+                    <div class="col-12 text-right">
+                        <button type="button" class="btn btn-primary" (click)="addStepField(i)">
+                            Ajouter un champ
+                        </button>
+                    </div>
+                    <div class="col-12 container-fluid" *ngFor="let field of step.fields; let field_index = index">
+                        <div class="row isolated-section">
+                            <div class="col-12 mt-2 text-right">
+                                <button type="button" mat-mini-fab color="warn" (click)="removeStepField(i, field_index)" aria-label="Supprimer le champs">
+                                    <mat-icon>clear</mat-icon>
+                                </button>
+                            </div>
+                            <div class="col-md-6">
+                                <mat-form-field class="full-width">
+                                    <mat-label>Nom</mat-label>
+                                    <input matInput placeholder="Nom" name="field_name[]" required [(ngModel)]="steps[i].fields[field_index].name">
+                                </mat-form-field>
+                            </div>
+                            <div class="col-md-6">
+                                <mat-form-field class="full-width">
+                                    <mat-label>Type</mat-label>
+                                    <mat-select name="step_field_type[]" required [(ngModel)]="steps[i].fields[field_index].type">
+                                        <mat-option [value]="antType" *ngFor="let antType of types; track antType">{{antType}}</mat-option>
+                                    </mat-select>
+                                </mat-form-field>
+                            </div>
+                            <div class="col-12" *ngIf="field.type === 'select' || field.type === 'multi-select'">
+                                <div class="row">
+                                    <div class="col-12 text-right" >
+                                        <button type="button" class="btn btn-primary" (click)="addStepOption(i, field_index)">
+                                            Ajouter une option
+                                        </button>
+                                    </div>
+                                    <div class="col-4" *ngFor="let option of field.options; let option_index = index">
+                                        <div class="form-group d-flex align-items-center">
+                                            <mat-form-field class="full-width">
+                                                <mat-label>Option</mat-label>
+                                                <input matInput placeholder="Option" name="step_field_option[]" required [(ngModel)]="steps[i].fields[field_index].options[option_index].value">
+                                            </mat-form-field>
+                                            <button type="button" mat-mini-fab color="warn" (click)="removeStepOption(i, field_index, option_index)" aria-label="Supprimer">
+                                                <mat-icon>remove</mat-icon>
+                                            </button>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            
+                            <div class="col-md-6 d-flex align-items-center">
+                                <div class="form-group d-flex mb-0">
+                                    <span class="mr-2">Requis:</span>
+                                    <label class="custom-toggle mb-0">
+                                        <input type="checkbox" (click)="toggleStepFieldCheckbox(i, field_index, 'is_required')" [checked]="steps[i].fields[field_index].is_required">
+                                        <span class="custom-toggle-slider rounded-circle"></span>
+                                    </label>
+                                </div>
+                            </div>
+                            <div class="col-md-6 d-flex align-items-center">
+                                <div class="form-group d-flex mb-0">
+                                    <span class="mr-2">Afficher dans la liste:</span>
+                                    <label class="custom-toggle mb-0">
+                                        <input type="checkbox" (click)="toggleStepFieldCheckbox(i, field_index, 'show_in_list')" [checked]="steps[i].fields[field_index].show_in_list">
+                                        <span class="custom-toggle-slider rounded-circle"></span>
+                                    </label>
+                                </div>
+                            </div>
+                        </div>
+                        
+                    </div>
+                </div>
+                
+            </div>
+        </div>
+    </form>
+
+</app-base-modal>

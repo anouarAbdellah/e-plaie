@@ -1,0 +1,137 @@
+<app-base-modal [title]="title" (closingEvent)="onClose()" (submit)="onSubmit()" [isLoading]="isLoading">
+    <form #f="ngForm" [ngClass]="{'hidden-element': !firstpage}">
+        <div class="row">
+            <div class="col-md-6">
+                <div class="form-group">
+                    <input type="text" name="code" required [(ngModel)]="data.code" class="form-control form-control-alternative"
+                        placeholder="Code"  #code="ngModel">
+                    <div class="error-message" *ngIf="code.invalid && code.touched">
+                        Code est requis.
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-6">
+                <div class="form-group">
+                    <input type="text" name="name" required [(ngModel)]="data.name" class="form-control form-control-alternative"
+                        placeholder="Nom" #name="ngModel">
+                    <div class="error-message" *ngIf="name.invalid && name.touched">
+                        Nom est requis.
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-6">
+                <div class="form-group">
+                    <select name="type" required [(ngModel)]="data.type" class="form-control form-control-alternative"
+                        placeholder="Type" #type="ngModel">
+                        <option value="" disabled>Type</option>
+                        <option [value]="antType" *ngFor="let antType of types">{{antType}}</option>
+                    </select>
+                    <div class="error-message" *ngIf="type.invalid && type.touched">
+                        Type est requis.
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-6">
+                <div class="form-group">
+                    <select name="account_type" required [(ngModel)]="data.account_type" class="form-control form-control-alternative"
+                        placeholder="Type de compte" #account_type="ngModel">
+                        <option value="" disabled>Type</option>
+                        <option [value]="antType" *ngFor="let antType of account_types">{{antType}}</option>
+                    </select>
+                    <div class="error-message" *ngIf="account_type.invalid && account_type.touched">
+                        Type est requis.
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-6">
+                <div class="form-group">
+                    <input type="file" name="logo" class="form-control form-control-alternative" placeholder="Logo" (change)="onChangeImage($event)">
+                </div>
+            </div>
+            <div class="col-md-6 d-flex align-items-center">
+                <div class="form-group d-flex mb-0">
+                    <span class="mr-2">Enabled:</span>
+                    <label class="custom-toggle mb-0">
+                        <input type="checkbox" (click)="toggleStatus()" [checked]="data.enabled">
+                        <span class="custom-toggle-slider rounded-circle"></span>
+                    </label>
+                </div>
+            </div>
+            <div class="col-md-12">
+                <div class="draggable-words">
+                    <span draggable="true" (dragstart)="dragStart($event)">{{"{nomPatient}"}}</span>
+                    <span draggable="true" (dragstart)="dragStart($event)">{{"{prenomPatient}"}}</span>
+                    <span draggable="true" (dragstart)="dragStart($event)">{{"{docteur}"}}</span>
+                    <span draggable="true" (dragstart)="dragStart($event)">{{"{clinique}"}}</span>
+                    <span draggable="true" (dragstart)="dragStart($event)">{{"{dateDocument}"}}</span>
+                    <span draggable="true" (dragstart)="dragStart($event)">{{"{villeCabinet}"}}</span>
+                    <span draggable="true" (dragstart)="dragStart($event)">{{"{dureeArret}"}}</span>
+                    <span draggable="true" (dragstart)="dragStart($event)">{{"{dureeCertificat}"}}</span>
+                    <span draggable="true" (dragstart)="dragStart($event)">{{"{dateRupture}"}}</span>
+                </div>
+                <label>En-tête</label>
+                <ckeditor required name="head" [(ngModel)]="data.head" placeholder="En-tête" #head="ngModel"></ckeditor>
+                <div class="error-message" *ngIf="head.invalid && head.touched">
+                    En-tête est requis.
+                </div>
+            </div>
+            <div class="col-md-12">
+                <div class="draggable-words">
+                    <span draggable="true" (dragstart)="dragStart($event)">{{"{nomPatient}"}}</span>
+                    <span draggable="true" (dragstart)="dragStart($event)">{{"{prenomPatient}"}}</span>
+                    <span draggable="true" (dragstart)="dragStart($event)">{{"{docteur}"}}</span>
+                    <span draggable="true" (dragstart)="dragStart($event)">{{"{clinique}"}}</span>
+                    <span draggable="true" (dragstart)="dragStart($event)">{{"{dateDocument}"}}</span>
+                    <span draggable="true" (dragstart)="dragStart($event)">{{"{villeCabinet}"}}</span>
+                    <span draggable="true" (dragstart)="dragStart($event)">{{"{dureeArret}"}}</span>
+                    <span draggable="true" (dragstart)="dragStart($event)">{{"{dureeCertificat}"}}</span>
+                    <span draggable="true" (dragstart)="dragStart($event)">{{"{dateRupture}"}}</span>
+                </div>
+                <label>Corp</label>
+                <ckeditor required name="body" [(ngModel)]="data.body" placeholder="Corp" #body="ngModel"></ckeditor>
+                <div class="error-message" *ngIf="body.invalid && body.touched">
+                    Corp est requis.
+                </div>
+            </div>
+            <div class="col-md-12">
+                <div class="draggable-words">
+                    <span draggable="true" (dragstart)="dragStart($event)">{{"{nomPatient}"}}</span>
+                    <span draggable="true" (dragstart)="dragStart($event)">{{"{prenomPatient}"}}</span>
+                    <span draggable="true" (dragstart)="dragStart($event)">{{"{docteur}"}}</span>
+                    <span draggable="true" (dragstart)="dragStart($event)">{{"{clinique}"}}</span>
+                    <span draggable="true" (dragstart)="dragStart($event)">{{"{dateDocument}"}}</span>
+                    <span draggable="true" (dragstart)="dragStart($event)">{{"{villeCabinet}"}}</span>
+                    <span draggable="true" (dragstart)="dragStart($event)">{{"{dureeArret}"}}</span>
+                    <span draggable="true" (dragstart)="dragStart($event)">{{"{dureeCertificat}"}}</span>
+                    <span draggable="true" (dragstart)="dragStart($event)">{{"{dateRupture}"}}</span>
+                </div>
+                <label>Bas de page</label>
+                <ckeditor required name="footer" [(ngModel)]="data.footer" placeholder="Bas de page" #footer="ngModel"></ckeditor>
+                <div class="error-message" *ngIf="footer.invalid && footer.touched">
+                    Bas de page est requis.
+                </div>
+            </div>
+        </div>
+    </form>
+
+    <div *ngIf="!firstpage">
+        <div class="row">
+            <div class="col-md-6 perscription-logo-holder">
+                <img class="perscription-logo" [src]="logoURL || '/assets/img/brand/red.png'" >
+            </div>
+            <div class="col-md-6 perscription-header-holder">
+                <div class="perscription-header" [innerHTML]="data.head"></div>
+            </div>
+            <div class="col-md-12 perscription-body-holder">
+                <div class="perscription-body" [innerHTML]="data.body"></div>
+            </div>
+            <div class="col-md-12 perscription-footer-holder">
+                <div class="perscription-footer" [innerHTML]="data.footer"></div>
+            </div>
+            <div class="col-md-12 perscription-back-button">
+                <button class="btn btn-danger perscription-back" (click)="backToFirstPage()">Retourner</button>
+            </div>
+        </div>
+    </div>
+
+</app-base-modal>

@@ -1,0 +1,48 @@
+<div class="table-responsive">
+    <table class="table align-items-center table-flush">
+        <thead class="thead-light">
+            <tr>
+                <th scope="col" *ngFor="let header of tableData">{{header.header}}</th>
+                <th scope="col"></th>
+            </tr>
+        </thead>
+        <tbody *ngIf="!isLoading">
+            <tr *ngFor="let item of data">
+                <th *ngFor="let itemKey of tableData">
+                    <div *ngIf="itemKey.type === 'text'">
+                        {{item[itemKey.key]}}
+                    </div>
+                    <div *ngIf="itemKey.type === 'date'">
+                        {{item[itemKey.key] | date:'short'}}
+                    </div>
+                    <div *ngIf="itemKey.type === 'status'">
+                        <label class="custom-toggle">
+                            <input type="checkbox" (change)="toggleStatusChange(!item[itemKey.key], item.id)" [checked]="item[itemKey.key]">
+                            <span class="custom-toggle-slider rounded-circle"></span>
+                        </label>
+                    </div>
+                </th>
+                
+                <td>
+                    <button mat-mini-fab color="primary" (click)="edit(item)" aria-label="Modifier">
+                        <mat-icon>edit</mat-icon>
+                    </button>
+                    <button mat-mini-fab color="primary" class="ml-2" (click)="view(item)" aria-label="Details" *ngIf="viewLink">
+                        <mat-icon>remove_red_eye</mat-icon>
+                    </button>
+                </td>
+                
+                
+            </tr>
+        </tbody>
+        <tbody *ngIf="isLoading">
+            <tr>
+                <td colspan="8">
+                    <div class="loading-holder">
+                        <mat-spinner [diameter]="30" style="margin-right: 10px;"></mat-spinner> {{'LOADING' | translate}}
+                    </div>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+</div>

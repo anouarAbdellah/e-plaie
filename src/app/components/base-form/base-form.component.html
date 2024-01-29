@@ -1,0 +1,61 @@
+<div class="row">
+    <div class="{{field.type === 'long-text' ? 'col-md-12' : 'col-md-6'}}" *ngFor="let field of fields">
+        <mat-form-field class="full-width" *ngIf="field.type === 'text'">
+            <mat-label>{{field.name}}</mat-label>
+            <input matInput placeholder="{{field.name}}" [name]="field.key" [required]="field.is_required" [(ngModel)]="data[field.key]">
+        </mat-form-field>
+        <mat-form-field class="full-width" *ngIf="field.type === 'long-text'">
+            <mat-label>{{field.name}}</mat-label>
+            <textarea matInput placeholder="{{field.name}}" [name]="field.key" [required]="field.is_required" [(ngModel)]="data[field.key]"></textarea>
+        </mat-form-field>
+        <mat-form-field class="full-width" *ngIf="field.type === 'select'">
+            <mat-label>{{field.name}}</mat-label>
+            <mat-select [name]="field.key" [required]="field.is_required" [(ngModel)]="data[field.key]">
+                <mat-option [value]="option.value" *ngFor="let option of field.options; track option">{{option.value}}</mat-option>
+            </mat-select>
+        </mat-form-field>
+        <mat-form-field class="full-width" *ngIf="field.type === 'multi-select'">
+            <mat-label>{{field.name}}</mat-label>
+            <mat-select [name]="field.key" multiple [required]="field.is_required" [(ngModel)]="data[field.key]">
+                <mat-option [value]="option.value" *ngFor="let option of field.options; track option">{{option.value}}</mat-option>
+            </mat-select>
+        </mat-form-field>
+    </div>
+    <div class="col-md-12 d-flex">
+        <button class="btn {{step.key != active_step ? 'btn-info' : 'btn-light'}}" *ngFor="let step of steps" (click)="onActiveStepChange(step)">
+            {{step.name}}
+        </button>
+    </div>
+    <div class="col-md-12 conatiner-fluid" *ngFor="let step of steps">
+        <div class="row" [ngClass]="{hidden_step: step.key != active_step}">
+            <div class="{{field.type === 'long-text' ? 'col-md-12' : 'col-md-6'}}" *ngFor="let field of step.fields">
+                <mat-form-field class="full-width" *ngIf="field.type === 'text'">
+                    <mat-label>{{field.name}}</mat-label>
+                    <input matInput placeholder="{{field.name}}" [name]="field.key" [required]="field.is_required" [(ngModel)]="data[field.key]">
+                </mat-form-field>
+                <mat-form-field class="full-width" *ngIf="field.type === 'long-text'">
+                    <mat-label>{{field.name}}</mat-label>
+                    <textarea matInput placeholder="{{field.name}}" [name]="field.key" [required]="field.is_required" [(ngModel)]="data[field.key]"></textarea>
+                </mat-form-field>
+                <mat-form-field class="full-width" *ngIf="field.type === 'select'">
+                    <mat-label>{{field.name}}</mat-label>
+                    <mat-select [name]="field.key" [required]="field.is_required" [(ngModel)]="data[field.key]">
+                        <mat-option [value]="option.value" *ngFor="let option of field.options; track option">{{option.value}}</mat-option>
+                    </mat-select>
+                </mat-form-field>
+                <mat-form-field class="full-width" *ngIf="field.type === 'multi-select'">
+                    <mat-label>{{field.name}}</mat-label>
+                    <mat-select [name]="field.key" multiple [required]="field.is_required" [(ngModel)]="data[field.key]">
+                        <mat-option [value]="option.value" *ngFor="let option of field.options; track option">{{option.value}}</mat-option>
+                    </mat-select>
+                </mat-form-field>
+            </div>
+        </div>
+    </div>
+
+    <div class="col-md-12">
+        <button type="button" mat-raised-button color="primary" (click)="onSubmit()" [disabled]="isLoading">
+            <mat-spinner [diameter]="30" style="margin-right: 10px;" *ngIf="isLoading"></mat-spinner> Sauvegarder
+        </button>
+    </div>
+</div>
