@@ -59,7 +59,7 @@ export class WoundsFormComponent implements OnInit {
     private modalService: NgbModal,
     private _snackBar: MatSnackBar
     ) {
-      this.data.patient_id = this.patient.id;
+      this.data.patient_id = this.patient?.id;
     }
 
   ngOnInit(): void {
@@ -208,10 +208,10 @@ export class WoundsFormComponent implements OnInit {
 
   replaceVariables(content) {
     if (content) {
-      content = content.replace(/{nomPatient}/g, this.patient.lastname);
-      content = content.replace(/{prenomPatient}/g, this.patient.firstname);
-      content = content.replace(/{docteur}/g, this.patient.doctor?.name);
-      content = content.replace(/{clinique}/g, this.patient.cabinet?.name);
+      content = content.replace(/{nomPatient}/g, this.patient?.lastname);
+      content = content.replace(/{prenomPatient}/g, this.patient?.firstname);
+      content = content.replace(/{docteur}/g, this.patient?.doctor?.name);
+      content = content.replace(/{clinique}/g, this.patient?.cabinet?.name);
       content = content.replace(/{dateDocument}/g, moment().format("DD-MM-YYYY"));
     }
     return content;

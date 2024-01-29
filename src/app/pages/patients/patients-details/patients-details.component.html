@@ -5,10 +5,10 @@
       <div class="row">
         <div class="col-lg-7 col-md-10">
             <h1 class="display-2 text-white">{{patient.firstname + " " + patient.lastname}}</h1>
-            <button type="button" mat-raised-button color="primary" (click)="onOpenForm('edit')">
+            <button type="button" mat-raised-button color="primary" (click)="onOpenForm('edit')" *ngIf="patient">
                 Modifier
             </button>
-            <button type="button" mat-raised-button color="accent" class="ml-2" (click)="onOpenForm('wound')">
+            <button type="button" mat-raised-button color="accent" class="ml-2" (click)="onOpenForm('wound')" *ngIf="patient">
                 Ajouter une plaie
             </button>
         </div>
@@ -216,14 +216,14 @@
 </div>
 
 <app-patients-form
-    *ngIf="showingForms.edit"
+    *ngIf="showingForms.edit && !isLoading && patient"
     [id]="id"
     (closingEvent)="onClose()"
     (reloadEvent)="getUpdatedData()"
     [selectedElement]="patient"
     ></app-patients-form>
 <app-wounds-form
-    *ngIf="showingForms.wound"
+    *ngIf="showingForms.wound && !isLoading && patient"
     [id]="selectedWound"
     [patient]="patient"
     (closingEvent)="onClose()"
