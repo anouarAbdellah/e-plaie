@@ -1,4 +1,4 @@
 export const environment = {
-  url: 'https://youtest.ma/',
+  url: 'https://youtest.ma',
   production: true
 };

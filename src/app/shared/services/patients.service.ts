@@ -22,4 +22,17 @@ export class PatientsService {
   find(id): Observable<any> {
     return this.http.get(`${environment.url}/api/patients/${id}`);
   }
+
+  all_ptsi(params): Observable<any> {
+    return this.http.get(`${environment.url}/api/ptsis`, params);
+  }
+  update_ptsi(id, data): Observable<any> {
+    return this.http.post(`${environment.url}/api/ptsis/${id}`, data);
+  }
+  create_ptsi(data): Observable<any> {
+    return this.http.post(`${environment.url}/api/ptsis`, data);
+  }
+  find_ptsi(id): Observable<any> {
+    return this.http.get(`${environment.url}/api/ptsis/${id}`);
+  }
 }

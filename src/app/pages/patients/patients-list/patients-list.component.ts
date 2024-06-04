@@ -135,7 +135,7 @@ export class PatientsListComponent implements OnInit {
       (result) => {
         console.log(result);
         const blob = new Blob([result], { type: 'text/csv' });
-        saveAs(blob, 'motifs.csv');
+        saveAs(blob, 'patients.csv');
         this.isLoading = false;
       }, 
       (error) => {

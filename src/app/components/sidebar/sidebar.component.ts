@@ -18,7 +18,9 @@ export const ROUTES: RouteInfo[] = [
     { path: '/ptis', title: 'Gestion des PTI',  icon: 'fas fa-file text-success', class: '' },
     { path: '/canvases', title: 'Gestion des canvas et templates',  icon: 'fas fa-paint-brush text-info', class: '' },
     { path: '/patients', title: 'Gestion des patients',  icon: 'fas fa-users text-warning', class: '' },
-    { path: '/custom-modules', title: 'Form dynamiques',  icon: 'fas fa-paint-brush text-info', class: '' },
+    { path: '/users', title: 'Gestion des utilisateurs',  icon: 'fas fa-users text-primary', class: '' },
+    { path: '/consultations', title: 'Gestion des consultations',  icon: 'fas fa-clock text-danger', class: '' },
+    // { path: '/custom-modules', title: 'Form dynamiques',  icon: 'fas fa-paint-brush text-info', class: '' },
 ];
 
 @Component({

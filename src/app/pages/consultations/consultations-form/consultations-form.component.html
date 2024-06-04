@@ -1,0 +1,317 @@
+<app-base-modal [title]="title" (closingEvent)="onClose()" [showSubmit]="false" [isLoading]="isLoading">
+    <form #f="ngForm">
+        <div class="row">
+            <div class="col-md-12 d-flex justify-content-center mb-2">
+                <button class="step" [ngClass]="{'active-step': key === active_step, 'no-border': key === steps.length - 1}" *ngFor="let step of steps; let key = index">
+                    {{step.name}}
+                </button>
+            </div>
+            <div class="col-md-12 d-flex">
+                <h3>{{getActiveStepName()}}</h3>
+            </div>
+            <div class="col-md-12 conatiner-fluid" >
+                <div [ngClass]="{hidden_step: 0 !== active_step}">
+                    <div class="row">
+                        <div class="col-md-6">
+                            <mat-form-field class="full-width">
+                                <mat-label>Patient</mat-label>
+                                <mat-select name="patient_id" required [(ngModel)]="data.patient_id" (valueChange)="onPatientChange($event)" [disabled]="!!patient">
+                                    <mat-option [value]="option.id" *ngFor="let option of patients; track option">{{option.firstname + " " + option.lastname}}</mat-option>
+                                </mat-select>
+                            </mat-form-field>
+                        </div>
+                        <div class="col-md-6">
+                            <mat-form-field class="full-width">
+                                <mat-label>Médecin</mat-label>
+                                <mat-select name="doctor_id" required [(ngModel)]="data.doctor_id">
+                                    <mat-option [value]="option.id" *ngFor="let option of doctors; track option">{{option.name}}</mat-option>
+                                </mat-select>
+                            </mat-form-field>
+                        </div>
+                        <div class="col-md-12 d-flex align-items-center">
+                            <div class="form-group d-flex mb-0">
+                                <span class="mr-2">Avec Plaie ?</span>
+                                <label class="custom-toggle mb-0">
+                                    <input type="checkbox" (click)="toggleWithWound()" [checked]="data.with_wound">
+                                    <span class="custom-toggle-slider rounded-circle"></span>
+                                </label>
+                            </div>
+                        </div>
+                        <div class="col-md-6">
+                            <mat-form-field class="full-width">
+                                <mat-label>Motif de consultation</mat-label>
+                                <mat-select name="motif_ids" multiple required [(ngModel)]="data.motif_ids">
+                                    <mat-option [value]="option.name" *ngFor="let option of motifs; track option">{{option.name}}</mat-option>
+                                </mat-select>
+                            </mat-form-field>
+                        </div>
+                        <div class="col-md-6">
+                            <mat-form-field class="full-width">
+                                <mat-label>Antécédents</mat-label>
+                                <mat-select name="antecedent_history_id" [(ngModel)]="data.antecedent_history_id">
+                                    <mat-option [value]="option.id" *ngFor="let option of antecedents; track option">{{option.title}}</mat-option>
+                                </mat-select>
+                            </mat-form-field>
+                        </div>
+                        <div class="col-md-6">
+                            <mat-form-field class="full-width">
+                                <mat-label>Diagnostique médical</mat-label>
+                                <textarea matInput placeholder="Diagnostique médical" name="diagnosis" required [(ngModel)]="data.diagnosis"></textarea>
+                            </mat-form-field>
+                        </div>
+                        <div class="col-md-6">
+                            <mat-form-field class="full-width">
+                                <mat-label>Résultat de l'examen clinique</mat-label>
+                                <textarea matInput placeholder="Résultat de l'examen clinique" name="result" required [(ngModel)]="data.result"></textarea>
+                            </mat-form-field>
+                        </div>
+                    </div>
+                </div>
+                <div [ngClass]="{hidden_step: 1 !== active_step}">
+                    <div class="row">
+                        <div class="col-md-6">
+                            <mat-form-field class="full-width">
+                                <mat-label>Poids(Kg)</mat-label>
+                                <input matInput type="number" placeholder="Poids(Kg)" name="weight" [(ngModel)]="data.weight" (change)="onChangeIMC($event)">
+                            </mat-form-field>
+                        </div>
+                        <div class="col-md-6">
+                            <mat-form-field class="full-width">
+                                <mat-label>Taille(cm)</mat-label>
+                                <input matInput type="number" placeholder="Poids(Kg)" name="height" [(ngModel)]="data.height" (change)="onChangeIMC($event)">
+                            </mat-form-field>
+                        </div>
+                        <div class="col-md-6">
+                            <mat-form-field class="full-width">
+                                <mat-label>IMC</mat-label>
+                                <input matInput type="number" disabled placeholder="IMC" name="imc" [(ngModel)]="data.imc" [ngStyle]="{backgroundColor: getIMCBackground()}">
+                            </mat-form-field>
+                        </div>
+                        <div class="col-md-6">
+                            <mat-form-field class="full-width">
+                                <mat-label>Fréquence cardiaque</mat-label>
+                                <input matInput placeholder="Fréquence cardiaque" name="bpm" [(ngModel)]="data.bpm">
+                            </mat-form-field>
+                        </div>
+                        <div class="col-md-6">
+                            <mat-form-field class="full-width">
+                                <mat-label>Pression artérielle</mat-label>
+                                <input matInput placeholder="Pression artérielle" name="bp" [(ngModel)]="data.bp">
+                            </mat-form-field>
+                        </div>
+                    </div>
+                </div>
+                <div [ngClass]="{hidden_step: 2 !== active_step}">
+                    <div class="col-md-6">
+                        <mat-form-field class="full-width">
+                            <mat-label>Type de document</mat-label>
+                            <mat-select name="document_type" [(ngModel)]="data.document_type">
+                                <mat-option value="upload">Chargez le document</mat-option>
+                                <mat-option value="generate">Générer un document</mat-option>
+                            </mat-select>
+                        </mat-form-field>
+                    </div>
+                    <div class="col-md-12" *ngIf="data.document_type === 'upload'">
+                        <ngx-dropzone 
+                            (change)="onSelectImage($event)" 
+                            [accept]="'image/*'" 
+                            [multiple]="true">
+                            <ngx-dropzone-image-preview ngProjectAs="ngx-dropzone-preview" *ngFor="let f of data.images" [file]="f" [removable]="true" (removed)="onRemoveImage(f)"></ngx-dropzone-image-preview>
+                            <ngx-dropzone-label>Glissez et déposez vos images ici!</ngx-dropzone-label>
+                        </ngx-dropzone>
+                    </div>
+                    <div class="col-md-12" *ngIf="data.document_type === 'generate'">
+                        <div class="container-fluid p-2">
+                            <div class="row">
+                                <div class="col-md-12">
+                                    <button type="button" mat-raised-button color="primary" (click)="addDocument()" [disabled]="isLoading">
+                                        Ajouter un document
+                                    </button>
+                                </div>
+                                <div class="col-md-12 container-fluid generate-document-canvas" *ngFor="let generate_document of generate_documents; let key = index; trackBy: trackByFn">
+                                    <div class="row" *ngIf="!generate_documents[key].generating">
+                                        <div class="col-12 mt-2 text-right">
+                                            <button type="button" mat-mini-fab color="warn" aria-label="Supprimer" (click)="removeDocument(key)">
+                                                <mat-icon>clear</mat-icon>
+                                            </button>
+                                        </div>
+                                        <div class="col-6">
+                                            <mat-form-field class="full-width">
+                                                <mat-label>Canvas</mat-label>
+                                                <mat-select name="type" name="canvas_id[]" required [(ngModel)]="generate_documents[key].canvas_id" (valueChange)="onDocumentCanvasChange($event, key)">
+                                                    <mat-option [value]="option.id" *ngFor="let option of canvases; track option">{{option.name}}</mat-option>
+                                                </mat-select>
+                                            </mat-form-field>
+                                        </div>
+                                        <div class="col-12 mt-2 text-right" *ngIf="generate_documents[key].canvas && (generate_documents[key].canvas.type === 'Ordonnance médicale' || generate_documents[key].canvas.type === 'PT')">
+                                            <button type="button" mat-raised-button color="primary" (click)="addMedicine(key)" [disabled]="isLoading">
+                                                Ajouter Médicaments
+                                            </button>
+                                        </div>
+
+                                        <div class="col-md-12" *ngIf="generate_documents[key].canvas && (generate_documents[key].canvas.type === 'Ordonnance médicale' || generate_documents[key].canvas.type === 'PT')">
+                                            <div class="container-fluid" *ngFor="let medicine of generate_documents[key].medicines; let medicineKey = index; trackBy: trackByFn">
+                                                <div class="row">
+                                                    <div class="col-6">
+                                                        <mat-form-field class="full-width">
+                                                            <mat-label>Médicament</mat-label>
+                                                            <mat-select name="type" required name="medicine[]" [(ngModel)]="generate_documents[key].medicines[medicineKey].medicine_id">
+                                                                <mat-option [value]="option.id" *ngFor="let option of medicines; track option">{{option.name}}</mat-option>
+                                                            </mat-select>
+                                                        </mat-form-field>
+                                                    </div>
+                                                    <div class="col-md-6">
+                                                        <mat-form-field class="full-width">
+                                                            <mat-label>Posologie</mat-label>
+                                                            <input matInput placeholder="Posologie" required name="posologie[]" [(ngModel)]="generate_documents[key].medicines[medicineKey].posologie">
+                                                        </mat-form-field>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        
+                                        <div class="col-6" *ngIf="generate_documents[key].canvas && generate_documents[key].canvas.type === 'Bilan'">
+                                            <mat-form-field class="full-width">
+                                                <mat-label>Type de bilans</mat-label>
+                                                <mat-select name="type" name="bilan_id[]" required [(ngModel)]="generate_documents[key].bilan_id" (valueChange)="onDocumentBilanChange($event, key)">
+                                                    <mat-option [value]="option.id" *ngFor="let option of bilans; track option">{{option.name}}</mat-option>
+                                                </mat-select>
+                                            </mat-form-field>
+                                        </div>
+
+                                        <div class="col-6" *ngIf="generate_documents[key].canvas && (generate_documents[key].canvas.type === 'Lettre d\'arrête de travail' || generate_documents[key].canvas.type === 'Certificat médical')">
+                                            <mat-form-field class="full-width">
+                                                <mat-label>Date de début</mat-label>
+                                                <input matInput [matDatepicker]="start_date_picker" [(ngModel)]="generate_documents[key].start_date">
+                                                <mat-hint>MM/DD/YYYY</mat-hint>
+                                                <mat-datepicker-toggle matSuffix [for]="start_date_picker"></mat-datepicker-toggle>
+                                                <mat-datepicker #picker></mat-datepicker>
+                                            </mat-form-field>
+                                        </div>
+                                        
+                                        <div class="col-6" *ngIf="generate_documents[key].canvas && (generate_documents[key].canvas.type === 'Lettre d\'arrête de travail' || generate_documents[key].canvas.type === 'Certificat médical')">
+                                            <mat-form-field class="full-width">
+                                                <mat-label>Date de fin</mat-label>
+                                                <input matInput [matDatepicker]="end_date_picker" [(ngModel)]="generate_documents[key].end_date">
+                                                <mat-hint>MM/DD/YYYY</mat-hint>
+                                                <mat-datepicker-toggle matSuffix [for]="end_date_picker"></mat-datepicker-toggle>
+                                                <mat-datepicker #picker></mat-datepicker>
+                                            </mat-form-field>
+                                        </div>
+                                        
+                                        <div class="col-12" *ngIf="generate_documents[key].canvas && (generate_documents[key].canvas.type === 'Lettre d\'orientation' || generate_documents[key].canvas.type === 'Ordonnance chirurgicale')">
+                                            <mat-form-field class="full-width">
+                                                <mat-label>Description</mat-label>
+                                                <textarea matInput placeholder="Description" required name="description[]" [(ngModel)]="generate_documents[key].description"></textarea>
+                                            </mat-form-field>
+                                        </div>
+                                        
+                                        <div class="col-12" *ngIf="generate_documents[key].canvas && (generate_documents[key].canvas.type !== 'Lettre d\'orientation' && generate_documents[key].canvas.type !== 'Ordonnance chirurgicale')">
+                                            <mat-form-field class="full-width">
+                                                <mat-label>Note</mat-label>
+                                                <textarea matInput placeholder="Note" required name="note[]" [(ngModel)]="generate_documents[key].note"></textarea>
+                                            </mat-form-field>
+                                        </div>
+                                    </div>
+                                    <div class="row" id="generate-document-preview" *ngIf="generate_documents[key].generating">
+                                        <div class="col-md-4 perscription-logo-holder">
+                                            <img class="perscription-logo" style="max-width: 100%;" [src]="generate_documents[key].canvas?.logo ? url + '/storage/' + generate_documents[key].canvas?.logo : '/assets/img/brand/red.png'" >
+                                        </div>
+                                        <div class="col-md-2"></div>
+                                        <div class="col-md-6 perscription-header-holder">
+                                            <div class="perscription-header" [innerHTML]="generate_documents[key].canvas?.head"></div>
+                                        </div>
+                                        <div class="col-md-12 perscription-body-holder">
+                                            <div class="perscription-body" [innerHTML]="generate_documents[key].canvas?.body"></div>
+                                        </div>
+                                        <div class="col-md-12 perscription-body-holder">
+                                            <div class="p-1" *ngFor="let medicine of generate_documents[key].medicines">
+                                                <span>
+                                                    {{medicine.medicine?.name}} {{medicine.posologie}}
+                                                </span>
+                                            </div>
+                                        </div>
+                                        <div class="col-md-12 perscription-body-holder" *ngIf="generate_documents[key].canvas && (generate_documents[key].canvas.type === 'Lettre d\'orientation' || generate_documents[key].canvas.type === 'Ordonnance chirurgicale')">
+                                            <div class="perscription-body" [innerHTML]="generate_documents[key].description"></div>
+                                        </div>
+                                        <div class="col-md-12 perscription-body-holder" *ngIf="generate_documents[key].canvas && (generate_documents[key].canvas.type !== 'Lettre d\'orientation' && generate_documents[key].canvas.type !== 'Ordonnance chirurgicale')">
+                                            <div class="perscription-body" [innerHTML]="generate_documents[key].note"></div>
+                                        </div>
+                                        <div class="col-md-12 perscription-footer-holder">
+                                            <div class="perscription-footer" [innerHTML]="generate_documents[key].canvas?.footer"></div>
+                                        </div>
+                                    </div>
+                                    <div class="row" *ngIf="generate_documents[key].canvas_id">
+                                        <div class="col-12 mt-2 text-right">
+                                            <button type="button" mat-raised-button color="primary" (click)="generateDocument(key)" *ngIf="!generate_documents[key].generating" [disabled]="isLoading">
+                                                Generer ordonnance
+                                            </button>
+                                            <button type="button" mat-raised-button color="primary" (click)="generateDocument(key)" *ngIf="generate_documents[key].generating" [disabled]="isLoading">
+                                                Annuler
+                                            </button>
+                                            <button type="button" mat-raised-button color="primary" class="ml-2" (click)="confirmGenerateDocument(key)" *ngIf="generate_documents[key].generating" [disabled]="isLoading">
+                                                Confirmer
+                                            </button>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div [ngClass]="{hidden_step: 3 !== active_step}">
+                    <div class="row">
+                        <div class="col-md-6">
+                            <mat-form-field class="full-width">
+                                <mat-label>Date du prochain RDV</mat-label>
+                                <input matInput [owlDateTime]="dt1" [owlDateTimeTrigger]="dt1" [(ngModel)]="data.date" placeholder="Date du prochain RDV">
+                                <owl-date-time #dt1></owl-date-time>
+                            </mat-form-field>
+                        </div>
+                    </div>
+                </div>
+                <div [ngClass]="{hidden_step: 4 !== active_step}">
+                    <div class="row">
+                        <div class="col-md-6">
+                            <mat-form-field class="full-width">
+                                <mat-label>Intitulé de paiement</mat-label>
+                                <input matInput placeholder="Intitulé de paiement" name="payment_title" [(ngModel)]="data.payment_title">
+                            </mat-form-field>
+                        </div>
+                        <div class="col-md-6">
+                            <mat-form-field class="full-width">
+                                <mat-label>Montant</mat-label>
+                                <input matInput type="number" placeholder="Montant" name="payment_price" [(ngModel)]="data.payment_price">
+                            </mat-form-field>
+                        </div>
+                        <div class="col-md-6">
+                            <mat-form-field class="full-width">
+                                <mat-label>Description</mat-label>
+                                <textarea matInput placeholder="Description" name="payment_description" [(ngModel)]="data.payment_description"></textarea>
+                            </mat-form-field>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        
+            <div class="col-md-12 container-fluid mt-2">
+                <div class="row">
+                    <div class="col-md-6">
+                        <button type="button" mat-raised-button color="primary" (click)="changeStep(false)" [disabled]="active_step <= 0">
+                            Precedent
+                        </button>
+                    </div>
+                    <div class="col-md-6 text-right">
+                        <button type="button" mat-raised-button color="primary" (click)="changeStep()" *ngIf="active_step < steps.length - 1">
+                            Suivant
+                        </button>
+                        <button type="button" mat-raised-button color="primary" (click)="onSubmit()" [disabled]="isLoading" *ngIf="active_step >= steps.length - 1">
+                            <mat-spinner [diameter]="30" style="margin-right: 10px;" *ngIf="isLoading"></mat-spinner> Sauvegarder
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </form>
+
+</app-base-modal>

@@ -1,0 +1,26 @@
+
+.images-container {
+    display: flex;
+    align-items: center;
+    flex-wrap: wrap;
+    padding: 10px;
+}
+.image-holder {
+    border: 1px solid grey;
+    border-radius: 8px;
+    position: relative;
+    margin: 10px;
+    width: 300px;
+    height: 300px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+.image-holder img {
+    max-width: 100%;
+    max-height: 100%;
+}
+.detail-elements {
+    border-bottom: 1px solid #b7b7b7;
+    margin-bottom: 22px;
+}

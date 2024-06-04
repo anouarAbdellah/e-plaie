@@ -13,6 +13,7 @@ import { Utils } from 'src/app/shared/helpers/utils';
 import { CanvasesService } from 'src/app/shared/services/canvases.service';
 import { MedicinesService } from 'src/app/shared/services/medicines.service';
 import { PatientsService } from 'src/app/shared/services/patients.service';
+import { UsersService } from 'src/app/shared/services/users.service';
 import { WoundsService } from 'src/app/shared/services/wounds.service';
 import { environment } from 'src/environments/environment';
 
@@ -26,6 +27,7 @@ export class WoundsFormComponent implements OnInit {
   title = constants.PLAIES;
   data: any = {
     patient_id: null,
+    praticien_id: null,
     type: null,
     etiologie: null,
     zone: null,
@@ -43,6 +45,7 @@ export class WoundsFormComponent implements OnInit {
   etiologies = etiologies;
   wounds_zones = wounds_zones;
   duration_types = duration_types;
+  practitioners: any = [];
   @Input() selectedElement;
   @Input() patient;
   @ViewChild('f') form: NgForm;
@@ -55,11 +58,12 @@ export class WoundsFormComponent implements OnInit {
   constructor(
     private woundsService: WoundsService,
     private canvasesService: CanvasesService,
+    private usersService: UsersService,
     private medicinesService: MedicinesService,
     private modalService: NgbModal,
     private _snackBar: MatSnackBar
     ) {
-      this.data.patient_id = this.patient.id;
+      
     }
 
   ngOnInit(): void {
@@ -80,8 +84,18 @@ export class WoundsFormComponent implements OnInit {
       (error) => {
       }
     )
+    this.usersService.all({params: {type: "practitioner", enabled: 1}}).subscribe(
+      (result) => {
+        console.log(result)
+        this.practitioners = result.data;
+      }, 
+      (error) => {
+      }
+    )
     this.data = {
+      patient_id: this.patient?.id,
       type: this.selectedElement ? this.selectedElement.type : null,
+      praticien_id: this.selectedElement ? this.selectedElement.praticien_id : null,
       etiologie: this.selectedElement ? this.selectedElement.etiologie : null,
       zone: this.selectedElement ? this.selectedElement.zone : null,
       treatments_count: this.selectedElement ? this.selectedElement.treatments_count : null,

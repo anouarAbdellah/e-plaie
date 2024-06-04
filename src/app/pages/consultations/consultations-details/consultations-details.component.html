@@ -1,0 +1,63 @@
+<app-base-modal [title]="title" (closingEvent)="onClose()" [showSubmit]="false">
+    <div class="row">
+        <div class="col-lg-6 p-2">
+            <strong>Médecin:</strong> {{consultation.doctor?.name}}
+        </div>
+        <div class="col-lg-6 p-2">
+            <strong>Motif de consultation:</strong> {{getMotifs()}}
+        </div>
+        <div class="col-lg-6 p-2">
+            <strong>Avec Plaie ?:</strong> {{consultation.with_wound ? "Oui" : "Non"}}
+        </div>
+        <div class="col-lg-6 p-2">
+            <strong>Antécédents:</strong> {{consultation.antecedent?.title}}
+        </div>
+        <div class="col-lg-6 p-2">
+            <strong>Diagnostique médical:</strong> {{consultation.diagnosis}}
+        </div>
+        <div class="col-lg-6 p-2">
+            <strong>Résultat de l'examen clinique:</strong> {{consultation.result}}
+        </div>
+        <div class="col-lg-12 p-2">
+            <hr />
+        </div>
+        <div class="col-lg-6 p-2">
+            <strong>Poids(Kg):</strong> {{consultation.weight}}
+        </div>
+        <div class="col-lg-6 p-2">
+            <strong>Taille(cm):</strong> {{consultation.height}}
+        </div>
+        <div class="col-lg-6 p-2" [ngStyle]="{color: getIMCBackground()}">
+            <strong>IMC:</strong> {{consultation.imc}}
+        </div>
+        <div class="col-lg-6 p-2">
+            <strong>Fréquence cardiaque:</strong> {{consultation.bpm}}
+        </div>
+        <div class="col-lg-6 p-2">
+            <strong>Pression artérielle:</strong> {{consultation.bp}}
+        </div>
+        <div class="col-lg-12 p-2">
+            <hr />
+        </div>
+        <div class="col-lg-6 p-2">
+            <strong>Date du prochain RDV:</strong> {{consultation.date}}
+        </div>
+        <div class="col-lg-6 p-2">
+            <strong>Intitulé de paiement:</strong> {{consultation.payment_title}}
+        </div>
+        <div class="col-lg-6 p-2">
+            <strong>Montant:</strong> {{consultation.payment_price}}
+        </div>
+        <div class="col-lg-6 p-2">
+            <strong>Description:</strong> {{consultation.payment_description}}
+        </div>
+        <div class="col-md-12 d-flex images-container">
+            <div class="image-holder" *ngFor="let document of consultation.documents;">
+                <button type="button" mat-raised-button color="primary" class="mr-2" (click)="downloadFile(document.file)">
+                    Telecharger le fichier {{prescription.id}}
+                </button>
+            </div>
+        </div>
+    </div>
+
+</app-base-modal>

@@ -1,0 +1,60 @@
+<app-base-modal [title]="title" (closingEvent)="onClose()" [showSubmit]="false">
+    <div class="row">
+        <div class="col-lg-6 p-2">
+            <strong>Zone:</strong> {{ptsi.zone}}
+        </div>
+        <div class="col-lg-6 p-2">
+            <strong>Phase:</strong> {{ptsi.phase}}
+        </div>
+        <div class="col-lg-6 p-2">
+            <strong>Etapes:</strong> {{ptsi.step}}
+        </div>
+        <div class="col-lg-6 p-2">
+            <strong>Stade:</strong> {{ptsi.stade}}
+        </div>
+        <div class="col-lg-6 p-2">
+            <strong>Tissus:</strong> {{ptsi.tissus}}
+        </div>
+        <div class="col-lg-6 p-2">
+            <strong>Inflammation & Infection:</strong> {{ptsi.inflammation}}
+        </div>
+        <div class="col-lg-6 p-2">
+            <strong>Maintien d'humidité:</strong> {{ptsi.humidity}}
+        </div>
+        <div class="col-lg-12 p-2">
+            <hr />
+        </div>
+        <div class="col-lg-6 p-2">
+            <strong>Largeur des berges en mm:</strong> {{ptsi.berge_width}}
+        </div>
+        <div class="col-lg-6 p-2">
+            <strong>Longueur des berges en mm:</strong> {{ptsi.berge_height}}
+        </div>
+        <div class="col-lg-6 p-2">
+            <strong>Largeur de plaie en mm:</strong> {{ptsi.wound_width}}
+        </div>
+        <div class="col-lg-6 p-2">
+            <strong>Longueur de plaie en mm:</strong> {{ptsi.wound_height}}
+        </div>
+        <div class="col-lg-6 p-2">
+            <strong>Profondeur de plaie:</strong> {{ptsi.wound_depth}}
+        </div>
+        <div class="col-lg-12">
+            <hr />
+            <div class="row" *ngFor="let coloration of ptsi.colors" [ngStyle]="{borderLeft: wound_coloration_codes.hasOwnProperty(coloration.color) ? '3px solid ' + wound_coloration_codes[coloration.color] : '3px solid #fff'}">
+                <div class="col-lg-6 p-2">
+                    <strong>Coloration:</strong> {{coloration.color}}
+                </div>
+                <div class="col-lg-6 p-2">
+                    <strong>Pourcentage:</strong> {{coloration.percentage}}%
+                </div>
+            </div>
+        </div>
+        <div class="col-md-12 d-flex images-container">
+            <div class="image-holder" *ngFor="let image of ptsi.images; let imageKey = index">
+                <img [src]="url + '/storage/' + image.image" />
+            </div>
+        </div>
+    </div>
+
+</app-base-modal>

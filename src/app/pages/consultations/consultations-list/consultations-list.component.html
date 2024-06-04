@@ -1,0 +1,43 @@
+<div class="header bg-gradient-info pb-8 pt-5 pt-md-8">
+    <div class="container-fluid">
+        <div class="header-body">
+        </div>
+    </div>
+</div>
+<!-- Page content -->
+<div class="container-fluid mt--7">
+    <!-- Table -->
+    <div class="row">
+        <div class="col">
+            <div class="card shadow">
+                <div class="card-header border-0 d-flex">
+                    <h3 class="mb-0">CONSULTATIONS</h3>
+                    <div class="ml-auto">
+                        <button class="btn btn-primary" (click)="onAdd()">
+                            Ajouter
+                        </button>
+                        <button class="btn btn-success ml-2" (click)="exportData()">
+                            Export
+                        </button>
+                    </div>
+                </div>
+                <div class="p-5">
+                    <full-calendar [options]="calendarOptions"></full-calendar>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<app-consultations-form
+    *ngIf="showingForms.edit || showingForms.add"
+    [id]="selectedElement"
+    (closingEvent)="onClose()"
+    (reloadEvent)="onFormReload()"
+    [selectedElement]="selectedElement"
+    ></app-consultations-form>
+<app-consultations-details
+        *ngIf="showingForms.consultation_details"
+        [consultation]="selectedElement"
+        (closingEvent)="onClose()"
+        ></app-consultations-details>

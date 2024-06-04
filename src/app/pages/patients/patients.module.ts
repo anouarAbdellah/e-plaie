@@ -21,6 +21,10 @@ import { PatientsDetailsComponent } from './patients-details/patients-details.co
 import { WoundsFormComponent } from './wounds-form/wounds-form.component';
 import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
 import {MatTabsModule} from '@angular/material/tabs';
+import { PtsiFormComponent } from './ptsi-form/ptsi-form.component';
+import { PtsiListComponent } from './ptsi-list/ptsi-list.component';
+import { ConsultationsModule } from '../consultations/consultations.module';
+import { FullCalendarModule } from '@fullcalendar/angular';
 
 
 @NgModule({
@@ -28,11 +32,15 @@ import {MatTabsModule} from '@angular/material/tabs';
     PatientsFormComponent,
     PatientsListComponent,
     PatientsDetailsComponent,
-    WoundsFormComponent
+    WoundsFormComponent,
+    PtsiFormComponent,
+    PtsiListComponent
   ],
   imports: [
     CommonModule,
     PatientsRoutingModule,
+    ConsultationsModule,
+    FullCalendarModule,
     ComponentsModule,
     HttpClientModule,
     FormsModule,

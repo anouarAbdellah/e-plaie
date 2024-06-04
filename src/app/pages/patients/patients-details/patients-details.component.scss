@@ -22,3 +22,101 @@
     border-bottom: 1px solid #b7b7b7;
     margin-bottom: 22px;
 }
+.mannequin-conatiner {
+    height: 319px;
+    width: 177px;
+    background-position: center;
+    background-repeat: no-repeat;
+    margin: auto;
+    position: relative;
+    background-size: 100%;
+}
+.wound-zone {
+    background: #e80505;
+    width: 18px;
+    height: 18px;
+    text-align: center;
+    border-radius: 50%;
+    position: absolute;
+}
+
+.face {
+    left: 80px;
+    top: 13px;
+}
+.neck {
+    left: 80px;
+    top: 34px;
+}
+.chest {
+    left: 77px;
+    top: 60px;
+}
+.stomach {
+    left: 77px;
+    top: 100px;
+}
+.arm {
+    left: 40px;
+    top: 76px;
+}
+.forearm {
+    left: 27px;
+    top: 111px;
+}
+.hand {
+    left: 9px;
+    top: 151px;
+}
+.hips {
+    left: 61px;
+    top: 137px;
+}
+.knee {
+    left: 61px;
+    top: 213px;
+}
+.leg {
+    left: 61px;
+    top: 252px;
+}
+.foot {
+    left: 55px;
+    top: 296px;
+}
+.head {
+    left: 80px;
+    top: 0px;
+}
+.nape {
+    left: 80px;
+    top: 34px;
+}
+.upper-back {
+    left: 77px;
+    top: 60px;
+}
+.lower-back {
+    left: 77px;
+    top: 100px;
+}
+.elbow {
+    left: 37px;
+    top: 97px;
+}
+.buttocks {
+    left: 66px;
+    top: 141px;
+}
+.thigh {
+    left: 59px;
+    top: 174px;
+}
+.calf {
+    left: 69px;
+    top: 240px;
+}
+.heel {
+    left: 68px;
+    top: 289px;
+}

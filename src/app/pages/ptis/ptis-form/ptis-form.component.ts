@@ -17,7 +17,7 @@ import { DomSanitizer } from '@angular/platform-browser';
   styleUrls: ['./ptis-form.component.scss']
 })
 export class PtisFormComponent implements OnInit {
-  title = constants.MOTIFS;
+  title = constants.PTIS;
   data;
   isLoading = false;
   horizontalPosition: MatSnackBarHorizontalPosition = 'end';

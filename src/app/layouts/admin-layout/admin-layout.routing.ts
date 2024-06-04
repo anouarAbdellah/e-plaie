@@ -44,6 +44,14 @@ export const AdminLayoutRoutes: Routes = [
         path: 'patients',
         loadChildren: () => import('src/app/pages/patients/patients.module').then(m => m.PatientsModule)
     },
+    {
+        path: 'users',
+        loadChildren: () => import('src/app/pages/users/users.module').then(m => m.UsersModule)
+    },
+    {
+        path: 'consultations',
+        loadChildren: () => import('src/app/pages/consultations/consultations.module').then(m => m.ConsultationsModule)
+    },
 
 
     // to delete later

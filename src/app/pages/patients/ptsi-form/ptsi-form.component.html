@@ -1,0 +1,199 @@
+<app-base-modal [title]="title" (closingEvent)="onClose()" [showSubmit]="false" [isLoading]="isLoading">
+    <form #f="ngForm">
+        <div class="row">
+            <div class="col-md-12 d-flex justify-content-center mb-2">
+                <button class="step" [ngClass]="{'active-step': key === active_step, 'no-border': key === steps.length - 1}" *ngFor="let step of steps; let key = index">
+                    {{step.name}}
+                </button>
+            </div>
+            <div class="col-md-12 d-flex">
+                <h3>{{getActiveStepName()}}</h3>
+            </div>
+            <div class="col-md-12 conatiner-fluid" >
+                <div [ngClass]="{hidden_step: 0 !== active_step}">
+                    <div class="row">
+                        <div class="col-md-6">
+                            <mat-form-field class="full-width">
+                                <mat-label>Zone</mat-label>
+                                <mat-select name="zone" required [(ngModel)]="data.zone">
+                                    <mat-option [value]="option" *ngFor="let option of wounds_zones; track option">{{option}}</mat-option>
+                                </mat-select>
+                            </mat-form-field>
+                        </div>
+                        <div class="col-md-6">
+                            <mat-form-field class="full-width">
+                                <mat-label>Phase</mat-label>
+                                <mat-select name="phase" required [(ngModel)]="data.phase" (valueChange)="onPhaseChange($event)">
+                                    <mat-option [value]="option" *ngFor="let option of wound_phases; track option">{{option}}</mat-option>
+                                </mat-select>
+                            </mat-form-field>
+                        </div>
+                        <div class="col-md-6">
+                            <mat-form-field class="full-width">
+                                <mat-label>Etapes</mat-label>
+                                <mat-select name="step" required [(ngModel)]="data.step">
+                                    <mat-option [value]="option" *ngFor="let option of wound_steps; track option">{{option}}</mat-option>
+                                </mat-select>
+                            </mat-form-field>
+                        </div>
+                        <div class="col-md-6">
+                            <mat-form-field class="full-width">
+                                <mat-label>Stade</mat-label>
+                                <mat-select name="stade" required [(ngModel)]="data.stade">
+                                    <mat-option [value]="option" *ngFor="let option of wound_stades; track option">{{option}}</mat-option>
+                                </mat-select>
+                            </mat-form-field>
+                        </div>
+                    </div>
+                    
+                    <div class="row">
+                        <div class="col-md-12 text-right  mb-2">
+                            <button type="button" mat-raised-button color="primary" (click)="addColoration()">
+                                Ajouter coloration
+                            </button>
+                        </div>
+                    </div>
+                    <div class="row" *ngFor="let colorationItem of data.existing_colorations; let colorationKey = index; trackBy: trackByFn">
+                        <div class="col-12 mt-2 text-right">
+                            <button type="button" mat-mini-fab color="warn" (click)="removeColoration(colorationKey)" aria-label="Supprimer">
+                                <mat-icon>clear</mat-icon>
+                            </button>
+                        </div>
+                        <div class="col-md-6">
+                            <mat-form-field class="full-width">
+                                <mat-label>Coloration</mat-label>
+                                <mat-select name="color" required [(ngModel)]="data.existing_colorations[colorationKey].color">
+                                    <mat-option [value]="option" *ngFor="let option of wound_colorations; track option">{{option}}</mat-option>
+                                </mat-select>
+                            </mat-form-field>
+                        </div>
+                        <div class="col-md-5">
+                            <mat-form-field class="full-width">
+                                <mat-label>Pourcentage</mat-label>
+                                <input matInput type="number" placeholder="Pourcentage" name="percentage" required [(ngModel)]="data.existing_colorations[colorationKey].percentage">
+                            </mat-form-field>
+                        </div>
+                        <div class="col-md-1 d-flex align-items-center">
+                            <div class="color-square" [ngStyle]="{backgroundColor: wound_coloration_codes.hasOwnProperty(data.existing_colorations[colorationKey].color) ? wound_coloration_codes[data.existing_colorations[colorationKey].color] : '#fff'}"></div>
+                        </div>
+                    </div> 
+                    <div class="row" *ngFor="let colorationItem of data.colorations; let colorationKey = index; trackBy: trackByFn">
+                        <div class="col-12 mt-2 text-right">
+                            <button type="button" mat-mini-fab color="warn" (click)="removeElementFromArray('colorations', colorationKey)" aria-label="Supprimer">
+                                <mat-icon>clear</mat-icon>
+                            </button>
+                        </div>
+                        <div class="col-md-6">
+                            <mat-form-field class="full-width">
+                                <mat-label>Coloration</mat-label>
+                                <mat-select name="color" required [(ngModel)]="data.colorations[colorationKey].color">
+                                    <mat-option [value]="option" *ngFor="let option of wound_colorations; track option">{{option}}</mat-option>
+                                </mat-select>
+                            </mat-form-field>
+                        </div>
+                        <div class="col-md-5">
+                            <mat-form-field class="full-width">
+                                <mat-label>Pourcentage</mat-label>
+                                <input matInput type="number" placeholder="Pourcentage" name="percentage" required [(ngModel)]="data.colorations[colorationKey].percentage">
+                            </mat-form-field>
+                        </div>
+                        <div class="col-md-1 d-flex align-items-center">
+                            <div class="color-square" [ngStyle]="{backgroundColor: wound_coloration_codes.hasOwnProperty(data.colorations[colorationKey].color) ? wound_coloration_codes[data.colorations[colorationKey].color] : '#fff'}"></div>
+                        </div>
+                    </div> 
+                </div>
+                <div [ngClass]="{hidden_step: 1 !== active_step}">
+                    <div class="row">
+                        <div class="col-md-6">
+                            <mat-form-field class="full-width">
+                                <mat-label>Tissus</mat-label>
+                                <mat-select name="tissus" required [(ngModel)]="data.tissus">
+                                    <mat-option [value]="option" *ngFor="let option of wound_tissus; track option">{{option}}</mat-option>
+                                </mat-select>
+                            </mat-form-field>
+                        </div>
+                        <div class="col-md-6">
+                            <mat-form-field class="full-width">
+                                <mat-label>Inflammation & Infection</mat-label>
+                                <input matInput placeholder="Inflammation & Infection" name="inflammation" required [(ngModel)]="data.inflammation">
+                            </mat-form-field>
+                        </div>
+                        <div class="col-md-6">
+                            <mat-form-field class="full-width">
+                                <mat-label>Maintien d'humidité</mat-label>
+                                <mat-select name="humidity" required [(ngModel)]="data.humidity">
+                                    <mat-option [value]="option" *ngFor="let option of wound_humidity; track option">{{option}}</mat-option>
+                                </mat-select>
+                            </mat-form-field>
+                        </div>
+                        <div class="col-md-12">
+                            <h6>Epidermisation</h6>
+                            <hr />
+                        </div>
+                        <div class="col-md-6">
+                            <mat-form-field class="full-width">
+                                <mat-label>Largeur des berges en mm</mat-label>
+                                <input matInput placeholder="Largeur des berges en mm" name="berge_width" required [(ngModel)]="data.berge_width">
+                            </mat-form-field>
+                        </div>
+                        <div class="col-md-6">
+                            <mat-form-field class="full-width">
+                                <mat-label>Longueur des berges en mm</mat-label>
+                                <input matInput placeholder="Longueur des berges en mm" name="berge_height" required [(ngModel)]="data.berge_height">
+                            </mat-form-field>
+                        </div>
+                        <div class="col-md-6">
+                            <mat-form-field class="full-width">
+                                <mat-label>Largeur de plaie en mm</mat-label>
+                                <input matInput placeholder="Largeur de plaie en mm" name="wound_width" required [(ngModel)]="data.wound_width">
+                            </mat-form-field>
+                        </div>
+                        <div class="col-md-6">
+                            <mat-form-field class="full-width">
+                                <mat-label>Longueur de plaie en mm</mat-label>
+                                <input matInput placeholder="Longueur de plaie en mm" name="wound_height" required [(ngModel)]="data.wound_height">
+                            </mat-form-field>
+                        </div>
+                        <div class="col-md-6">
+                            <mat-form-field class="full-width">
+                                <mat-label>Profondeur de plaie</mat-label>
+                                <input matInput placeholder="Profondeur de plaie" name="wound_depth" required [(ngModel)]="data.wound_depth">
+                            </mat-form-field>
+                        </div>
+                    </div>
+                    
+                </div>
+                <div [ngClass]="{hidden_step: 2 !== active_step}">
+                    <div class="col-md-12">
+                        <ngx-dropzone 
+                            (change)="onSelectImage($event)" 
+                            [accept]="'image/*'" 
+                            [multiple]="true">
+                            <ngx-dropzone-image-preview ngProjectAs="ngx-dropzone-preview" *ngFor="let f of data.images" [file]="f" [removable]="true" (removed)="onRemoveImage(f)"></ngx-dropzone-image-preview>
+                            <ngx-dropzone-label>Glissez et déposez vos images ici!</ngx-dropzone-label>
+                        </ngx-dropzone>
+                    </div>
+                </div>
+            </div>
+        
+            <div class="col-md-12 container-fluid mt-2">
+                <div class="row">
+                    <div class="col-md-6">
+                        <button type="button" mat-raised-button color="primary" (click)="changeStep(false)" [disabled]="active_step <= 0">
+                            Precedent
+                        </button>
+                    </div>
+                    <div class="col-md-6 text-right">
+                        <button type="button" mat-raised-button color="primary" (click)="changeStep()" *ngIf="active_step < steps.length - 1">
+                            Suivant
+                        </button>
+                        <button type="button" mat-raised-button color="primary" (click)="onSubmit()" [disabled]="isLoading" *ngIf="active_step >= steps.length - 1">
+                            <mat-spinner [diameter]="30" style="margin-right: 10px;" *ngIf="isLoading"></mat-spinner> Sauvegarder
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </form>
+
+</app-base-modal>
