@@ -215,7 +215,7 @@
                                     </div>
                                     <div class="row" id="generate-document-preview" *ngIf="generate_documents[key].generating">
                                         <div class="col-md-4 perscription-logo-holder">
-                                            <img class="perscription-logo" style="max-width: 100%;" [src]="generate_documents[key].canvas?.logo ? url + '/storage/' + generate_documents[key].canvas?.logo : '/assets/img/brand/red.png'" >
+                                            <img class="perscription-logo" style="max-width: 100%;" [src]="generate_documents[key].canvas?.logo ? url + '/storage/' + generate_documents[key].canvas?.logo : './assets/img/brand/red.png'" >
                                         </div>
                                         <div class="col-md-2"></div>
                                         <div class="col-md-6 perscription-header-holder">
