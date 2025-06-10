@@ -1,60 +1,319 @@
 <app-base-modal [title]="title" (closingEvent)="onClose()" [showSubmit]="false">
     <div class="row">
-        <div class="col-lg-6 p-2">
-            <strong>Zone:</strong> {{ptsi.zone}}
+        <div class="col-12 text-right">
+            <button class="btn btn-primary" (click)="downloadPtsi()">
+                Telecharger
+            </button>
         </div>
-        <div class="col-lg-6 p-2">
-            <strong>Phase:</strong> {{ptsi.phase}}
-        </div>
-        <div class="col-lg-6 p-2">
-            <strong>Etapes:</strong> {{ptsi.step}}
-        </div>
-        <div class="col-lg-6 p-2">
-            <strong>Stade:</strong> {{ptsi.stade}}
-        </div>
-        <div class="col-lg-6 p-2">
-            <strong>Tissus:</strong> {{ptsi.tissus}}
-        </div>
-        <div class="col-lg-6 p-2">
-            <strong>Inflammation & Infection:</strong> {{ptsi.inflammation}}
-        </div>
-        <div class="col-lg-6 p-2">
-            <strong>Maintien d'humidité:</strong> {{ptsi.humidity}}
-        </div>
-        <div class="col-lg-12 p-2">
-            <hr />
-        </div>
-        <div class="col-lg-6 p-2">
-            <strong>Largeur des berges en mm:</strong> {{ptsi.berge_width}}
-        </div>
-        <div class="col-lg-6 p-2">
-            <strong>Longueur des berges en mm:</strong> {{ptsi.berge_height}}
-        </div>
-        <div class="col-lg-6 p-2">
-            <strong>Largeur de plaie en mm:</strong> {{ptsi.wound_width}}
-        </div>
-        <div class="col-lg-6 p-2">
-            <strong>Longueur de plaie en mm:</strong> {{ptsi.wound_height}}
-        </div>
-        <div class="col-lg-6 p-2">
-            <strong>Profondeur de plaie:</strong> {{ptsi.wound_depth}}
-        </div>
-        <div class="col-lg-12">
-            <hr />
-            <div class="row" *ngFor="let coloration of ptsi.colors" [ngStyle]="{borderLeft: wound_coloration_codes.hasOwnProperty(coloration.color) ? '3px solid ' + wound_coloration_codes[coloration.color] : '3px solid #fff'}">
-                <div class="col-lg-6 p-2">
-                    <strong>Coloration:</strong> {{coloration.color}}
+        <div class="col-12">
+            <div class="ptsi-details" #ptsiDetailsContent>
+                <div class="ptsi-details-patient">
+                    <span class="details-text-holder"><span class="details-label">Nom:</span> {{patient?.lastname}}</span> 
+                    <span class="details-text-holder"><span class="details-label">Prénom:</span> {{patient?.firstname}}</span> 
+                    <span class="details-text-holder"><span class="details-label">Age:</span> {{calculateAge(patient?.birthday)}}</span> 
+                    <span class="details-text-holder"><span class="details-label">Sexe:</span> {{patient?.gender === "Male" ? "M" : "F"}}</span> 
                 </div>
-                <div class="col-lg-6 p-2">
-                    <strong>Pourcentage:</strong> {{coloration.percentage}}%
+                <div class="ptsi-details-first">
+                    <span class="details-checkbox-holder"><span class="details-label bold-label">Patho. Veineuse:</span> <input type="checkbox" disabled [checked]="ptsi.patho" /></span> 
+                    <span class="details-checkbox-holder"><span class="details-label">Doppler:</span> <input type="checkbox" disabled [checked]="ptsi.patho_dopler" /></span> 
+                    <span class="details-text-holder"><span class="details-label">Date:</span> {{ ptsi.patho_date || '........' }}</span>  
+                    <span class="details-checkbox-holder"><span class="details-label">Opérée:</span> <input type="checkbox" disabled [checked]="ptsi.patho_operee" /></span> 
+                    <span class="details-checkbox-holder"><span class="details-label bold-label">TVP/TVS:</span> <input type="checkbox" disabled [checked]="ptsi.tvp" /></span> 
+                    <span class="details-text-holder"><span class="details-label">Date:</span> {{ ptsi.tvp_date || '........' }}</span>  
+                    <span class="details-text-holder"><span class="details-label bold-label">Contention:</span> {{ ptsi.contention || '........' }}</span>  
+                    <span class="details-checkbox-holder"><span class="details-label bold-label">AOMI:</span> <input type="checkbox" disabled [checked]="ptsi.aomi" /></span> 
+                    <span class="details-checkbox-holder"><span class="details-label">Doppler:</span> <input type="checkbox" disabled [checked]="ptsi.aomi_doppler" /></span> 
+                    <span class="details-text-holder"><span class="details-label">Date:</span> {{ ptsi.aomi_date || '........' }}</span>  
+                    <span class="details-checkbox-holder"><span class="details-label bold-label">Cardiopathie:</span> <input type="checkbox" disabled [checked]="ptsi.cardiopathie" /></span> 
+                    <span class="details-text-holder"><span class="details-label bold-label">Anticoagulant:</span> {{ ptsi.anticoagulant || '........' }}</span>  
+                    <span class="details-checkbox-holder"><span class="details-label bold-label">Tabac:</span> <input type="checkbox" disabled [checked]="ptsi.tabac" /></span> 
+                    <span class="details-checkbox-holder"><span class="details-label">H+cholestérolémie:</span> <input type="checkbox" disabled [checked]="ptsi.cholesterolemie" /></span> 
+                    <span class="details-checkbox-holder"><span class="details-label bold-label">HTA:</span> <input type="checkbox" disabled [checked]="ptsi.hta" /></span> 
+                    <span class="details-checkbox-holder"><span class="details-label bold-label">DID:</span> <input type="checkbox" disabled [checked]="ptsi.did" /></span> 
+                    <span class="details-checkbox-holder"><span class="details-label bold-label">DNID:</span> <input type="checkbox" disabled [checked]="ptsi.dnid" /></span> 
+                    <span class="details-text-holder"><span class="details-label">HbA,C:</span> {{ ptsi.dnid_hbac || '........' }}</span>  
+                    <span class="details-text-holder"><span class="details-label">Date:</span> {{ ptsi.dnid_date || '........' }}</span>  
+                    <span class="details-checkbox-holder"><span class="details-label bold-label">Obesite:</span> <input type="checkbox" disabled [checked]="ptsi.obesite" /></span> 
+                    <span class="details-checkbox-holder"><span class="details-label bold-label">Denutrition:</span> <input type="checkbox" disabled [checked]="ptsi.denutrition" /></span> 
+                    <span class="details-checkbox-holder"><span class="details-label">Mobelite:</span> <input type="checkbox" disabled [checked]="ptsi.mobelite" /></span> 
+                    <span class="details-checkbox-holder"><span class="details-label bold-label">Allergie:</span> <input type="checkbox" disabled [checked]="ptsi.allergie" /></span> 
+                    <span class="details-checkbox-holder"><span class="details-label bold-label">Hygiene:</span> <input type="checkbox" disabled [checked]="ptsi.hygiene" /></span> 
+                    <span class="details-checkbox-holder"><span class="details-label bold-label">Ordonnance:</span> <input type="checkbox" disabled [checked]="ptsi.ordonnance" /></span> 
+                    <span class="details-checkbox-holder"><span class="details-label bold-label">VAT:</span> <input type="checkbox" disabled [checked]="ptsi.vat" /></span> 
+                    <span class="details-checkbox-holder"><span class="details-label bold-label">Bilan sanguin:</span> <input type="checkbox" disabled [checked]="ptsi.bilan_sanguin" /></span> 
+                    <span class="details-text-holder"><span class="details-label">Date:</span> {{ ptsi.bilan_sanguin_date || '........' }}</span>  
+                    <span class="details-text-holder"><span class="details-label">DFG:</span> {{ ptsi.bilan_sanguin_dfg || '........' }}</span>  
+                    <span class="details-text-holder"><span class="details-label">GB:</span> {{ ptsi.bilan_sanguin_gb || '........' }}</span>  
+                    <span class="details-text-holder"><span class="details-label">Albumine:</span> {{ ptsi.bilan_sanguin_albumine || '........' }}</span>  
+                    <span class="details-text-holder"><span class="details-label">CRP:</span> {{ ptsi.bilan_sanguin_crp || '........' }}</span>         
+                </div>
+
+                <div class="ptsi-details-second">
+                    <div class="mannequin-conatiner" style="background-image: url(/assets/img/male-mannequin-nobg.jpg)">
+                        <div [ngClass]="wounds_zones_classes[ptsi.zone]" [ngStyle]="{background: generateLinearGradient()}" class="wound-zone"></div>
+                    </div>
+                </div>
+                <div class="ptsi-details-third">
+                    <span class="details-checkbox-holder"><span class="details-label bold-label">Douleur:</span> <input type="checkbox" disabled [checked]="ptsi.douleur" /></span> 
+                    <span class="details-text-holder"><span class="details-label">EVA:</span> {{ ptsi.douleur_eva || '........' }}</span>  
+                    <span class="details-checkbox-holder"><span class="details-label">Spontanee:</span> <input type="checkbox" disabled [checked]="ptsi.douleur_spontanee" /></span> 
+                    <span class="details-checkbox-holder"><span class="details-label">Provoquee:</span> <input type="checkbox" disabled [checked]="ptsi.douleur_provoquee" /></span> 
+                    <span class="details-checkbox-holder"><span class="details-label">Intermittente:</span> <input type="checkbox" disabled [checked]="ptsi.douleur_intermittente" /></span> 
+                    <span class="details-checkbox-holder"><span class="details-label">Continue:</span> <input type="checkbox" disabled [checked]="ptsi.douleur_continue" /></span> 
+                    <span class="details-checkbox-holder"><span class="details-label bold-label">Antalgique:</span> <input type="checkbox" disabled [checked]="ptsi.antalgique" /></span> 
+                    <span class="details-text-holder"><span class="details-label">Niveau:</span> {{ ptsi.antalgique_niveau || '........' }}</span>  
+                    <span class="details-text-holder"><span class="details-label">Plaie: siege:</span> {{ ptsi.plaie_siege || '........' }}</span>  
+                    <span class="details-text-holder"><span class="details-label">Anciennete:</span> {{ ptsi.plaie_anciennete || '........' }}</span>  
+                    <span class="details-text-holder"><span class="details-label">Date episode:</span> {{ ptsi.plaie_date_episode || '........' }}</span>  
+                    <span class="details-checkbox-holder"><span class="details-label">Spontanee:</span> <input type="checkbox" disabled [checked]="ptsi.spontanee" /></span> 
+                    <span class="details-checkbox-holder"><span class="details-label">Traumatisme:</span> <input type="checkbox" disabled [checked]="ptsi.traumatisme" /></span> 
+                    <span class="details-checkbox-holder"><span class="details-label">Post operatoire:</span> <input type="checkbox" disabled [checked]="ptsi.post_operatoire" /></span> 
+                    <span class="details-checkbox-holder"><span class="details-label">Ulcere:</span> <input type="checkbox" disabled [checked]="ptsi.ulcere" /></span> 
+                    <span class="details-checkbox-holder"><span class="details-label">Veineux:</span> <input type="checkbox" disabled [checked]="ptsi.veineux" /></span> 
+                    <span class="details-checkbox-holder"><span class="details-label">Arteriel:</span> <input type="checkbox" disabled [checked]="ptsi.arteriel" /></span> 
+                    <span class="details-checkbox-holder"><span class="details-label">Mixte:</span> <input type="checkbox" disabled [checked]="ptsi.mixte" /></span> 
+                    <span class="details-checkbox-holder"><span class="details-label">Mal perf:</span> <input type="checkbox" disabled [checked]="ptsi.mal_perf" /></span> 
+                    <span class="details-text-holder"><span class="details-label">Stade:</span> {{ ptsi.escarre_stade || '........' }}</span>  
+                    <span class="details-checkbox-holder"><span class="details-label">Hématome:</span> <input type="checkbox" disabled [checked]="ptsi.hematome" /></span>
+                    <span class="details-text-holder"><span class="details-label">Brûlure degré:</span> {{ ptsi.brulure_degre || '........' }}</span>
+                    <span class="details-checkbox-holder"><span class="details-label">Dermabrasion:</span> <input type="checkbox" disabled [checked]="ptsi.dermabrasion" /></span>
+                    <span class="details-text-holder"><span class="details-label">Autre:</span> {{ ptsi.plaie_autre || '........' }}</span>
+                    <span class="details-checkbox-holder"><span class="details-label bold-label">Soins réalisés par IDE:</span> <input type="checkbox" disabled [checked]="ptsi.soins_ide" /></span>
+                    <span class="details-text-holder"><span class="details-label">Fréquence:</span> {{ ptsi.soins_frequence || '........' }}</span>
+                    <span class="details-text-holder"><span class="details-label">Jours:</span> {{ ptsi.soins_frequence_jours || '........' }}</span>
+
+                    <div>
+                        <table class="table table-bordered">
+                            <thead>
+                                <tr>
+                                    <td>
+                                        Pansement
+                                    </td>
+                                    <td>
+                                        Nom Commercial
+                                    </td>
+                                    <td>
+                                        Déplacé
+                                    </td>
+                                    <td>
+                                        Tenue
+                                    </td>
+                                    <td>
+                                        Tolérance
+                                    </td>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr>
+                                    <td>
+                                        Primaire
+                                    </td>
+                                    <td>
+                                        {{ptsi.pansement_primaire}}
+                                    </td>
+                                    <td>
+                                        {{ptsi.pansement_primaire_deplace ? "Oui" : "Non"}}
+                                    </td>
+                                    <td>
+                                        {{ptsi.pansement_primaire_tenue}}
+                                    </td>
+                                    <td>
+                                        {{ptsi.pansement_primaire_deplace ? "Oui" : "Non"}}
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td>
+                                        Secondaire
+                                    </td>
+                                    <td>
+                                        {{ptsi.pansement_secondaire}}
+                                    </td>
+                                    <td>
+                                        {{ptsi.pansement_secondaire_deplace ? "Oui" : "Non"}}
+                                    </td>
+                                    <td>
+                                        {{ptsi.pansement_secondaire_tenue}}
+                                    </td>
+                                    <td>
+                                        {{ptsi.pansement_secondaire_tolerance ? "Oui" : "Non"}}
+                                    </td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+                <div class="ptsi-details-coloration">
+                    <div>
+                        <table class="table table-bordered">
+                            <thead>
+                                <tr>
+                                    <td colspan="2">
+                                        Dimension
+                                    </td>
+                                    <td colspan="2">
+                                        Coloration
+                                    </td>
+                                    <td colspan="2">
+                                        Situation
+                                    </td>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr>
+                                    <td>
+                                        Largeur des berges en mm
+                                    </td>
+                                    <td>
+                                        {{ptsi.berge_width}}
+                                    </td>
+                                    <td class="color-necrose">
+                                        
+                                    </td>
+                                    <td>
+                                        {{getColorPercentage("Nécrose")}}%
+                                    </td>
+                                    <td>
+                                        Etapes
+                                    </td>
+                                    <td>
+                                        {{ptsi.step}}
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td>
+                                        Longueur des berges en mm
+                                    </td>
+                                    <td>
+                                        {{ptsi.berge_height}}
+                                    </td>
+                                    <td class="color-bourgeonnement">
+                                        
+                                    </td>
+                                    <td>
+                                        {{getColorPercentage("Bourgeonnement")}}%
+                                    </td>
+                                    <td>
+                                        Stade
+                                    </td>
+                                    <td>
+                                        {{ptsi.stade}}
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td>
+                                        Largeur de plaie en mm
+                                    </td>
+                                    <td>
+                                        {{ptsi.wound_width}}
+                                    </td>
+                                    <td class="color-fibrine">
+                                        
+                                    </td>
+                                    <td>
+                                        {{getColorPercentage("Fibrine")}}%
+                                    </td>
+                                    <td>
+                                        Tissus
+                                    </td>
+                                    <td>
+                                        {{ptsi.tissus}}
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td>
+                                        Longueur de plaie en mm
+                                    </td>
+                                    <td>
+                                        {{ptsi.wound_height}}
+                                    </td>
+                                    <td class="color-epidermisation">
+                                        
+                                    </td>
+                                    <td>
+                                        {{getColorPercentage("Epidermisation")}}%
+                                    </td>
+                                    <td>
+                                        Inflammation & Infection
+                                    </td>
+                                    <td>
+                                        {{ptsi.inflammation}}
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td>
+                                        Profondeur de plaie
+                                    </td>
+                                    <td>
+                                        {{ptsi.wound_depth}}
+                                    </td>
+                                    <td class="color-infection">
+                                        
+                                    </td>
+                                    <td>
+                                        {{getColorPercentage("Infection")}}%
+                                    </td>
+                                    <td>
+                                        Maintien d'humidité
+                                    </td>
+                                    <td>
+                                        {{ptsi.humidity}}
+                                    </td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+                <div class="ptsi-details-forth">
+                    <div class="details-title">
+                        Action: protocole de soins et prescriptions
+                    </div>
+                    <span class="details-checkbox-holder"><span class="details-label">Détersion:</span> <input type="checkbox" disabled [checked]="ptsi.protocole_detersion" /></span>
+                    <span class="details-checkbox-holder"><span class="details-label">Anesth:</span> <input type="checkbox" disabled [checked]="ptsi.protocole_anesth" /></span>
+                    <span class="details-checkbox-holder"><span class="details-label">Compresse:</span> <input type="checkbox" disabled [checked]="ptsi.protocole_compresse" /></span>
+                    <span class="details-checkbox-holder"><span class="details-label">Bistouri:</span> <input type="checkbox" disabled [checked]="ptsi.protocole_bistouri" /></span>
+                    <span class="details-checkbox-holder"><span class="details-label">Curette:</span> <input type="checkbox" disabled [checked]="ptsi.protocole_curette" /></span>
+                    <span class="details-checkbox-holder"><span class="details-label">Douleur:</span> <input type="checkbox" disabled [checked]="ptsi.protocole_douleur" /></span>
+                    <span class="details-text-holder"><span class="details-label">EVA:</span> {{ ptsi.protocole_douleur_eva || '........' }}</span>
+                    <span class="details-checkbox-holder"><span class="details-label">Prélèvement:</span> <input type="checkbox" disabled [checked]="ptsi.protocole_prelevement" /></span>
+                    <span class="details-checkbox-holder"><span class="details-label">Ecouvillon:</span> <input type="checkbox" disabled [checked]="ptsi.protocole_ecouvillon" /></span>
+                    <span class="details-checkbox-holder"><span class="details-label">Curatage:</span> <input type="checkbox" disabled [checked]="ptsi.protocole_curtage" /></span>
+                    <span class="details-checkbox-holder"><span class="details-label">Biopsie:</span> <input type="checkbox" disabled [checked]="ptsi.protocole_biopsie" /></span>
+
+                    <span class="details-text-holder"><span class="details-label">Pansement primaire:</span> {{ ptsi.protocole_pansement_primaire || '........' }}</span>
+                    <span class="details-text-holder"><span class="details-label">Pansement secondaire:</span> {{ ptsi.protocole_pansement_secondaire || '........' }}</span>
+                    <span class="details-text-holder"><span class="details-label">Peau péri:</span> {{ ptsi.protocole_peau_peri || '........' }}</span>
+
+                    <span class="details-checkbox-holder"><span class="details-label">Contention:</span> <input type="checkbox" disabled [checked]="ptsi.protocole_contention" /></span>
+                    <span class="details-text-holder"><span class="details-label">Taille:</span> {{ ptsi.protocole_contention_taille || '........' }}</span>
+                    <span class="details-text-holder"><span class="details-label">Type:</span> {{ ptsi.protocole_contention_type || '........' }}</span>
+
+                    <span class="details-text-holder"><span class="details-label">Antibiothérapie:</span> {{ ptsi.protocole_antibiotherapie || '........' }}</span>
+                    <span class="details-text-holder"><span class="details-label">Dose:</span> {{ ptsi.protocole_antibiotherapie_dose || '........' }}</span>
+                    <span class="details-text-holder"><span class="details-label">Durée:</span> {{ ptsi.protocole_antibiotherapie_duree || '........' }}</span>
+
+                    <span class="details-checkbox-holder"><span class="details-label">Bilan:</span> <input type="checkbox" disabled [checked]="ptsi.protocole_bilan" /></span>
+                    <span class="details-checkbox-holder"><span class="details-label">Radiographie:</span> <input type="checkbox" disabled [checked]="ptsi.protocole_radiographie" /></span>
+                    <span class="details-checkbox-holder"><span class="details-label">Doppler veineux:</span> <input type="checkbox" disabled [checked]="ptsi.protocole_doppler_veineux" /></span>
+                    <span class="details-checkbox-holder"><span class="details-label">Doppler artériel:</span> <input type="checkbox" disabled [checked]="ptsi.protocole_doppler_arteriel" /></span>
+
+                    <span class="details-text-holder"><span class="details-label">Consultation:</span> {{ ptsi.protocole_consultation || '........' }}</span>
+
+                    <span class="details-checkbox-holder"><span class="details-label">Photo:</span> <input type="checkbox" disabled [checked]="ptsi.protocole_photo" /></span>
+                    <span class="details-checkbox-holder"><span class="details-label">Planimétrie:</span> <input type="checkbox" disabled [checked]="ptsi.protocole_planimetrie" /></span>
+
+                    
+
+                </div>
+                <div class="ptsi-details-fifth">
+                    <span class="details-text-holder"><span class="details-label  bold-label">Observations:</span> {{ptsi.observations}}</span>
                 </div>
             </div>
         </div>
-        <div class="col-md-12 d-flex images-container">
+        <!-- <div class="col-md-12 d-flex images-container">
             <div class="image-holder" *ngFor="let image of ptsi.images; let imageKey = index">
                 <img [src]="url + '/storage/' + image.image" />
             </div>
-        </div>
+        </div> -->
     </div>
 
 </app-base-modal>

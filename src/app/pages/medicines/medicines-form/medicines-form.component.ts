@@ -2,7 +2,7 @@ import { Component, EventEmitter, Input, OnInit, Output, ViewChild } from '@angu
 import { NgForm } from '@angular/forms';
 import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
 import { MedicinesService } from 'src/app/shared/services/medicines.service';
-import {constants, medicines_types} from "../../../shared/constants";
+import {constants, medicines_categories, medicines_types, medicines_variants} from "../../../shared/constants";
 import {
   MatSnackBar,
   MatSnackBarHorizontalPosition,
@@ -19,6 +19,9 @@ export class MedicinesFormComponent implements OnInit {
   data;
   isLoading = false;
   types = medicines_types;
+  categories = medicines_categories;
+  sub_categories = [];
+  variants = medicines_variants;
   horizontalPosition: MatSnackBarHorizontalPosition = 'end';
   verticalPosition: MatSnackBarVerticalPosition = 'bottom';
   @Input() selectedElement;
@@ -34,10 +37,14 @@ export class MedicinesFormComponent implements OnInit {
       type: this.selectedElement ? this.selectedElement.type : "",
       code: this.selectedElement ? this.selectedElement.code : "",
       name: this.selectedElement ? this.selectedElement.name : "",
+      variant: this.selectedElement ? this.selectedElement.variant : "",
+      category: this.selectedElement ? this.selectedElement.category : "",
+      sub_category: this.selectedElement ? this.selectedElement.sub_category : "",
       buying_price: this.selectedElement ? this.selectedElement.buying_price : "",
       selling_price: this.selectedElement ? this.selectedElement.selling_price : "",
       enabled: this.selectedElement ? this.selectedElement.enabled : true
-    }
+    };
+    this.onChangeCategory();
   }
 
   onClose() {
@@ -97,5 +104,14 @@ export class MedicinesFormComponent implements OnInit {
         verticalPosition: this.verticalPosition,
         panelClass: ['danger-snackbar']
       });
+  }
+
+  onChangeCategory() {
+    const selected_category = this.categories.find((el: any) => el.name === this.data.category);
+    if (selected_category) {
+      this.sub_categories = [...selected_category.sub_categories];
+    } else {
+      this.sub_categories = [];
+    }
   }
 }

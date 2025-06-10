@@ -33,6 +33,42 @@
             </div>
             <div class="col-md-6">
                 <div class="form-group">
+                    <select name="variant" required [(ngModel)]="data.variant" class="form-control form-control-alternative"
+                        placeholder="Variante" #variant="ngModel">
+                        <option value="" disabled>Variante</option>
+                        <option [value]="medVariant" *ngFor="let medVariant of variants">{{medVariant}}</option>
+                    </select>
+                    <div class="error-message" *ngIf="variant.invalid && variant.touched">
+                        Variante est requis.
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-6">
+                <div class="form-group">
+                    <select name="category" required [(ngModel)]="data.category" class="form-control form-control-alternative"
+                        placeholder="Catégorie" #category="ngModel" (change)="onChangeCategory()">
+                        <option value="" disabled>Catégorie</option>
+                        <option [value]="medCategory.name" *ngFor="let medCategory of categories">{{medCategory.name}}</option>
+                    </select>
+                    <div class="error-message" *ngIf="category.invalid && category.touched">
+                        Catégorie est requis.
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-6" *ngIf="sub_categories.length > 0">
+                <div class="form-group">
+                    <select name="sub_category" required [(ngModel)]="data.sub_category" class="form-control form-control-alternative"
+                        placeholder="Sous-catégorie" #sub_category="ngModel">
+                        <option value="" disabled>Sous-catégorie</option>
+                        <option [value]="medCategory" *ngFor="let medCategory of sub_categories">{{medCategory}}</option>
+                    </select>
+                    <div class="error-message" *ngIf="sub_category.invalid && sub_category.touched">
+                        Sous-catégorie est requis.
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-6">
+                <div class="form-group">
                     <input type="number" name="buying_price" required [(ngModel)]="data.buying_price"
                         class="form-control form-control-alternative" placeholder="Prix d'achat" #buying_price="ngModel">
                     <div class="error-message" *ngIf="buying_price.invalid && buying_price.touched">

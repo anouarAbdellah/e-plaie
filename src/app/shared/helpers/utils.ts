@@ -37,33 +37,39 @@ export class Utils {
 
     static generateFormData(obj, formData = new FormData(), parentKey = '', parentIsArray = false): FormData {
         
-        for (let key in obj) {
-            if (obj.hasOwnProperty(key)) {
-              let arrayKey = parentIsArray ? `${parentKey}[${key}]` : `${parentKey}${key}`;
-        
-              if (Array.isArray(obj[key])) {
-                obj[key].forEach((item, index) => {
-                  if (typeof item === 'object' && !(item instanceof File) && !(item instanceof Date)) {
-                    this.generateFormData(item, formData, `${arrayKey}[${index}]`, true);
-                  } else {
-                    if (item instanceof Date) {
-                      formData.append(`${arrayKey}[${index}]`, item.toISOString());
-                    } else {
-                      formData.append(`${arrayKey}[${index}]`, item);
-                    }
-                  }
-                });
-              } else if (typeof obj[key] === 'object' && !(obj[key] instanceof File) && !(obj[key] instanceof Date)) {
-                this.generateFormData(obj[key], formData, `${arrayKey}`, true);
+      for (let key in obj) {
+        if (obj.hasOwnProperty(key)) {
+          let arrayKey = parentIsArray ? `${parentKey}[${key}]` : `${parentKey}${key}`;
+    
+          if (Array.isArray(obj[key])) {
+            obj[key].forEach((item, index) => {
+              if (typeof item === 'object' && !(item instanceof File) && !(item instanceof Date)) {
+                this.generateFormData(item, formData, `${arrayKey}[${index}]`, true);
               } else {
-                if (obj[key] instanceof Date) {
-                  formData.append(arrayKey, obj[key].toISOString());
+                if (item instanceof Date) {
+                  formData.append(`${arrayKey}[${index}]`, item.toISOString());
                 } else {
-                  formData.append(arrayKey, obj[key]);
+                  if (item === "true" || item === "false" || item === true || item === false) {
+                    item = item === "true" || item === true ? 1 : 0;
+                  }
+                  formData.append(`${arrayKey}[${index}]`, item);
                 }
               }
+            });
+          } else if (typeof obj[key] === 'object' && !(obj[key] instanceof File) && !(obj[key] instanceof Date)) {
+            this.generateFormData(obj[key], formData, `${arrayKey}`, true);
+          } else {
+            if (obj[key] instanceof Date) {
+              formData.append(arrayKey, obj[key].toISOString());
+            } else {
+              if (obj[key] === "true" || obj[key] === "false" || obj[key] === true || obj[key] === false) {
+                obj[key] = obj[key] === "true" || obj[key] === true ? 1 : 0;
+              }
+              formData.append(arrayKey, obj[key]);
             }
           }
-          return formData;
+        }
     }
+    return formData;
+  }
 }

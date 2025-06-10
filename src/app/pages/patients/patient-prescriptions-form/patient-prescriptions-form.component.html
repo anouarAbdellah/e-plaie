@@ -1,0 +1,61 @@
+<app-base-modal [title]="title" (closingEvent)="onClose()" [showSubmit]="false" [isLoading]="isLoading">
+    <form #f="ngForm">
+        <div class="row">
+            <div class="col-md-12 conatiner-fluid" >
+                <div >
+                    <div class="row">
+                        <div class="col-md-12 text-right mb-2">
+                            <button type="button" mat-raised-button color="primary" (click)="addPrescription()">
+                                Ajouter ordonnance
+                            </button>
+                        </div>
+                    </div>
+                    <div class="row" *ngFor="let prescriptionItem of data.prescriptions; let prescriptionKey = index; trackBy: trackByFn">
+                        <div class="col-12 mt-2 text-right">
+                            <button type="button" mat-mini-fab color="warn" (click)="removeElementFromArray('prescriptions', prescriptionKey)" aria-label="Supprimer">
+                                <mat-icon>clear</mat-icon>
+                            </button>
+                        </div>
+                        <div class="col-md-6">
+                            <mat-form-field class="full-width">
+                                <mat-label>Type d'ordonnance</mat-label>
+                                <mat-select name="type_prescription{{prescriptionKey}}" required [(ngModel)]="data.prescriptions[prescriptionKey].type">
+                                    <mat-option [value]="option" *ngFor="let option of prescriptions_types; track option">{{option}}</mat-option>
+                                </mat-select>
+                            </mat-form-field>
+                        </div>
+                        <div class="col-md-6" *ngIf="data.prescriptions[prescriptionKey].type">
+                            <mat-form-field class="full-width">
+                                <mat-label>Date d'ordonnance</mat-label>
+                                <input matInput [matDatepicker]="prescription_date_picker" name="date{{prescriptionKey}}" required [(ngModel)]="data.prescriptions[prescriptionKey].date">
+                                <mat-hint>MM/DD/YYYY</mat-hint>
+                                <mat-datepicker-toggle matSuffix [for]="prescription_date_picker"></mat-datepicker-toggle>
+                                <mat-datepicker #prescription_date_picker></mat-datepicker>
+                            </mat-form-field>
+                        </div>
+                        <div class="col-md-12" *ngIf="data.prescriptions[prescriptionKey].type">
+                            <ngx-dropzone 
+                                (change)="onSelectPrescriptionImage($event, prescriptionKey)" 
+                                [accept]="'image/*'" 
+                                [multiple]="true">
+                                <ngx-dropzone-image-preview ngProjectAs="ngx-dropzone-preview" *ngFor="let f of data.prescriptions[prescriptionKey].images" [file]="f" [removable]="true" (removed)="onRemovePrescriptionImage(f, prescriptionKey)"></ngx-dropzone-image-preview>
+                                <ngx-dropzone-label>Glissez et déposez vos images ici!</ngx-dropzone-label>
+                            </ngx-dropzone>
+                        </div>
+                    </div> 
+                </div>
+            </div>
+        
+            <div class="col-md-12 container-fluid mt-2">
+                <div class="row">
+                    <div class="col-md-12 text-right">
+                        <button type="button" mat-raised-button color="primary" (click)="onSubmit()" [disabled]="isLoading">
+                            <mat-spinner [diameter]="30" style="margin-right: 10px;" *ngIf="isLoading"></mat-spinner> Sauvegarder
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </form>
+
+</app-base-modal>

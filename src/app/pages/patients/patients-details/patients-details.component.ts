@@ -40,7 +40,10 @@ export class PatientsDetailsComponent implements OnInit {
     ptsi: false,
     ptsi_list: false,
     consultation: false,
-    consultation_details: false
+    consultation_details: false,
+    bilans_form: false,
+    antecedents_form: false,
+    prescriptions_form: false
   };
   selected_items = {
     wound: null,

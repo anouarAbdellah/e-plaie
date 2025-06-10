@@ -24,3 +24,158 @@
     border-bottom: 1px solid #b7b7b7;
     margin-bottom: 22px;
 }
+
+.mannequin-conatiner {
+    height: 319px;
+    width: 320px;
+    background-position: center;
+    background-repeat: no-repeat;
+    margin: auto;
+    position: relative;
+    background-size: 100%;
+}
+.wound-zone {
+    background: #e80505;
+    width: 18px;
+    height: 18px;
+    text-align: center;
+    border-radius: 50%;
+    position: absolute;
+}
+
+.face {
+    left: 68px;
+    top: 13px;
+}
+.neck {
+    left: 68px;
+    top: 34px;
+}
+.chest {
+    left: 65px;
+    top: 60px;
+}
+.stomach {
+    left: 65px;
+    top: 100px;
+}
+.arm {
+    left: 28px;
+    top: 76px;
+}
+.forearm {
+    left: 15px;
+    top: 111px;
+}
+.hand {
+    left: -3px;
+    top: 151px;
+}
+.hips {
+    left: 49px;
+    top: 137px;
+}
+.knee {
+    left: 49px;
+    top: 213px;
+}
+.leg {
+    left: 49px;
+    top: 252px;
+}
+.foot {
+    left: 43px;
+    top: 296px;
+}
+.head {
+    left: 233px;
+    top: 7px;
+}
+.nape {
+    left: 233px;
+    top: 34px;
+}
+.upper-back {
+    left: 230px;
+    top: 60px;
+}
+.lower-back {
+    left: 230px;
+    top: 100px;
+}
+.elbow {
+    left: 190px;
+    top: 97px;
+}
+.buttocks {
+    left: 219px;
+    top: 141px;
+}
+.thigh {
+    left: 212px;
+    top: 174px;
+}
+.calf {
+    left: 222px;
+    top: 240px;
+}
+.heel {
+    left: 56px;
+    top: 289px;
+}
+span.details-checkbox-holder {
+    padding: 0px 26px 0px 0px;
+}
+span.details-checkbox-holder .details-label {
+    margin-right: 16px;
+}
+span.details-text-holder {
+    padding: 0px 26px 0px 0px;
+}
+span.details-text-holder .details-label {
+    margin-right: 16px;
+}
+.ptsi-details {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: flex-start;
+    justify-content: space-evenly;
+}
+.ptsi-details-third {
+    width: calc(100% - 320px);
+}
+.ptsi-details-forth {
+    width: 70%;
+}
+.ptsi-details-fifth {
+    width: 30%;
+}
+.color-necrose{
+    background-color: #555556;
+}
+.color-bourgeonnement{
+    background-color: #FF2E00;
+}
+.color-fibrine{
+    background-color: #FFE974;
+}
+.color-epidermisation{
+    background-color: #FF98C9;
+}
+.color-infection{
+    background-color: #C5E4D9;
+}
+.ptsi-details-coloration {
+    width: 100%;
+}
+.details-title {
+    font-weight: bold;
+    margin-bottom: 10px;
+}
+.bold-label {
+    font-weight: bold;
+}
+.ptsi-details-patient {
+    width: 100%;
+    margin-bottom: 12px;
+}

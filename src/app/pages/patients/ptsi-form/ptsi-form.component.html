@@ -11,6 +11,618 @@
             </div>
             <div class="col-md-12 conatiner-fluid" >
                 <div [ngClass]="{hidden_step: 0 !== active_step}">
+                    <div class="row ptsi-small-fields">
+                        <div class="col-md-4">
+                            <div class="form-group d-flex mb-0">
+                                <span class="mr-2">patho:</span>
+                                <label class="custom-toggle mb-0">
+                                    <input type="checkbox" (click)="toggleFieldCheckbox('patho')" [checked]="data.patho">
+                                    <span class="custom-toggle-slider rounded-circle"></span>
+                                </label>
+                            </div>
+                        </div>
+                        
+                        <div class="col-md-4">
+                            <div class="form-group d-flex mb-0">
+                                <span class="mr-2">doppler:</span>
+                                <label class="custom-toggle mb-0">
+                                    <input type="checkbox" (click)="toggleFieldCheckbox('patho_dopler')" [checked]="data.patho_dopler">
+                                    <span class="custom-toggle-slider rounded-circle"></span>
+                                </label>
+                            </div>
+                        </div>
+                        
+                        <div class="col-md-4">
+                            <mat-form-field class="full-width">
+                                <mat-label>date</mat-label>
+                                <input matInput [matDatepicker]="patho_date_picker" [(ngModel)]="data.patho_date">
+                                <mat-hint>MM/DD/YYYY</mat-hint>
+                                <mat-datepicker-toggle matSuffix [for]="patho_date_picker"></mat-datepicker-toggle>
+                                <mat-datepicker #patho_date_picker></mat-datepicker>
+                            </mat-form-field>
+                        </div>
+                        
+                        <div class="col-md-4">
+                            <div class="form-group d-flex mb-0">
+                                <span class="mr-2">operée:</span>
+                                <label class="custom-toggle mb-0">
+                                    <input type="checkbox" (click)="toggleFieldCheckbox('patho_operee')" [checked]="data.patho_operee">
+                                    <span class="custom-toggle-slider rounded-circle"></span>
+                                </label>
+                            </div>
+                        </div>
+                        
+                        <div class="col-md-4">
+                            <div class="form-group d-flex mb-0">
+                                <span class="mr-2">tvp:</span>
+                                <label class="custom-toggle mb-0">
+                                    <input type="checkbox" (click)="toggleFieldCheckbox('tvp')" [checked]="data.tvp">
+                                    <span class="custom-toggle-slider rounded-circle"></span>
+                                </label>
+                            </div>
+                        </div>
+                        
+                        <div class="col-md-4">
+                            <mat-form-field class="full-width">
+                                <mat-label>date</mat-label>
+                                <input matInput [matDatepicker]="tvp_date_picker" [(ngModel)]="data.tvp_date">
+                                <mat-hint>MM/DD/YYYY</mat-hint>
+                                <mat-datepicker-toggle matSuffix [for]="tvp_date_picker"></mat-datepicker-toggle>
+                                <mat-datepicker #tvp_date_picker></mat-datepicker>
+                            </mat-form-field>
+                        </div>
+                        
+                        <div class="col-md-4">
+                            <mat-form-field class="full-width">
+                                <mat-label>contention</mat-label>
+                                <input matInput placeholder="contention" name="contention" [(ngModel)]="data.contention">
+                            </mat-form-field>
+                        </div>
+                        
+                        <div class="col-md-4">
+                            <div class="form-group d-flex mb-0">
+                                <span class="mr-2">aomi:</span>
+                                <label class="custom-toggle mb-0">
+                                    <input type="checkbox" (click)="toggleFieldCheckbox('aomi')" [checked]="data.aomi">
+                                    <span class="custom-toggle-slider rounded-circle"></span>
+                                </label>
+                            </div>
+                        </div>
+                        
+                        <div class="col-md-4">
+                            <div class="form-group d-flex mb-0">
+                                <span class="mr-2">doppler:</span>
+                                <label class="custom-toggle mb-0">
+                                    <input type="checkbox" (click)="toggleFieldCheckbox('aomi_doppler')" [checked]="data.aomi_doppler">
+                                    <span class="custom-toggle-slider rounded-circle"></span>
+                                </label>
+                            </div>
+                        </div>
+                        
+                        <div class="col-md-4">
+                            <mat-form-field class="full-width">
+                                <mat-label>date</mat-label>
+                                <input matInput [matDatepicker]="aomi_date_picker" [(ngModel)]="data.aomi_date">
+                                <mat-hint>MM/DD/YYYY</mat-hint>
+                                <mat-datepicker-toggle matSuffix [for]="aomi_date_picker"></mat-datepicker-toggle>
+                                <mat-datepicker #aomi_date_picker></mat-datepicker>
+                            </mat-form-field>
+                        </div>
+                        <div class="col-md-4">
+                            <div class="form-group d-flex mb-0">
+                                <span class="mr-2">cardiopathie:</span>
+                                <label class="custom-toggle mb-0">
+                                    <input type="checkbox" (click)="toggleFieldCheckbox('cardiopathie')" [checked]="data.cardiopathie">
+                                    <span class="custom-toggle-slider rounded-circle"></span>
+                                </label>
+                            </div>
+                        </div>
+                        
+                        <div class="col-md-4">
+                            <mat-form-field class="full-width">
+                                <mat-label>anticoagulant</mat-label>
+                                <input matInput placeholder="anticoagulant" name="anticoagulant" [(ngModel)]="data.anticoagulant">
+                            </mat-form-field>
+                        </div>
+                        
+                        <div class="col-md-4">
+                            <div class="form-group d-flex mb-0">
+                                <span class="mr-2">tabac:</span>
+                                <label class="custom-toggle mb-0">
+                                    <input type="checkbox" (click)="toggleFieldCheckbox('tabac')" [checked]="data.tabac">
+                                    <span class="custom-toggle-slider rounded-circle"></span>
+                                </label>
+                            </div>
+                        </div>
+                        
+                        <div class="col-md-4">
+                            <div class="form-group d-flex mb-0">
+                                <span class="mr-2">h+cholesterolemie:</span>
+                                <label class="custom-toggle mb-0">
+                                    <input type="checkbox" (click)="toggleFieldCheckbox('cholesterolemie')" [checked]="data.cholesterolemie">
+                                    <span class="custom-toggle-slider rounded-circle"></span>
+                                </label>
+                            </div>
+                        </div>
+                        
+                        <div class="col-md-4">
+                            <div class="form-group d-flex mb-0">
+                                <span class="mr-2">hta:</span>
+                                <label class="custom-toggle mb-0">
+                                    <input type="checkbox" (click)="toggleFieldCheckbox('hta')" [checked]="data.hta">
+                                    <span class="custom-toggle-slider rounded-circle"></span>
+                                </label>
+                            </div>
+                        </div>
+                        
+                        <div class="col-md-4">
+                            <div class="form-group d-flex mb-0">
+                                <span class="mr-2">did:</span>
+                                <label class="custom-toggle mb-0">
+                                    <input type="checkbox" (click)="toggleFieldCheckbox('did')" [checked]="data.did">
+                                    <span class="custom-toggle-slider rounded-circle"></span>
+                                </label>
+                            </div>
+                        </div>
+                        
+                        <div class="col-md-4">
+                            <div class="form-group d-flex mb-0">
+                                <span class="mr-2">dnid:</span>
+                                <label class="custom-toggle mb-0">
+                                    <input type="checkbox" (click)="toggleFieldCheckbox('dnid')" [checked]="data.dnid">
+                                    <span class="custom-toggle-slider rounded-circle"></span>
+                                </label>
+                            </div>
+                        </div>
+                        
+                        <div class="col-md-4">
+                            <mat-form-field class="full-width">
+                                <mat-label>hbac</mat-label>
+                                <input matInput placeholder="dnid hbac" name="dnid_hbac" [(ngModel)]="data.dnid_hbac">
+                            </mat-form-field>
+                        </div>
+                        
+                        <div class="col-md-4">
+                            <mat-form-field class="full-width">
+                                <mat-label>date</mat-label>
+                                <input matInput [matDatepicker]="dnid_date_picker" [(ngModel)]="data.dnid_date">
+                                <mat-hint>MM/DD/YYYY</mat-hint>
+                                <mat-datepicker-toggle matSuffix [for]="dnid_date_picker"></mat-datepicker-toggle>
+                                <mat-datepicker #dnid_date_picker></mat-datepicker>
+                            </mat-form-field>
+                        </div>
+                        
+                        <div class="col-md-4">
+                            <div class="form-group d-flex mb-0">
+                                <span class="mr-2">obesite:</span>
+                                <label class="custom-toggle mb-0">
+                                    <input type="checkbox" (click)="toggleFieldCheckbox('obesite')" [checked]="data.obesite">
+                                    <span class="custom-toggle-slider rounded-circle"></span>
+                                </label>
+                            </div>
+                        </div>
+                        <div class="col-md-4">
+                            <div class="form-group d-flex mb-0">
+                                <span class="mr-2">denutrition:</span>
+                                <label class="custom-toggle mb-0">
+                                    <input type="checkbox" (click)="toggleFieldCheckbox('denutrition')" [checked]="data.denutrition">
+                                    <span class="custom-toggle-slider rounded-circle"></span>
+                                </label>
+                            </div>
+                        </div>
+                        
+                        <div class="col-md-4">
+                            <div class="form-group d-flex mb-0">
+                                <span class="mr-2">mobelite:</span>
+                                <label class="custom-toggle mb-0">
+                                    <input type="checkbox" (click)="toggleFieldCheckbox('mobelite')" [checked]="data.mobelite">
+                                    <span class="custom-toggle-slider rounded-circle"></span>
+                                </label>
+                            </div>
+                        </div>
+                        
+                        <div class="col-md-4">
+                            <div class="form-group d-flex mb-0">
+                                <span class="mr-2">allergie:</span>
+                                <label class="custom-toggle mb-0">
+                                    <input type="checkbox" (click)="toggleFieldCheckbox('allergie')" [checked]="data.allergie">
+                                    <span class="custom-toggle-slider rounded-circle"></span>
+                                </label>
+                            </div>
+                        </div>
+                        
+                        <div class="col-md-4">
+                            <div class="form-group d-flex mb-0">
+                                <span class="mr-2">hygiene:</span>
+                                <label class="custom-toggle mb-0">
+                                    <input type="checkbox" (click)="toggleFieldCheckbox('hygiene')" [checked]="data.hygiene">
+                                    <span class="custom-toggle-slider rounded-circle"></span>
+                                </label>
+                            </div>
+                        </div>
+                        
+                        <div class="col-md-4">
+                            <div class="form-group d-flex mb-0">
+                                <span class="mr-2">ordonnance:</span>
+                                <label class="custom-toggle mb-0">
+                                    <input type="checkbox" (click)="toggleFieldCheckbox('ordonnance')" [checked]="data.ordonnance">
+                                    <span class="custom-toggle-slider rounded-circle"></span>
+                                </label>
+                            </div>
+                        </div>
+                        
+                        <div class="col-md-4">
+                            <div class="form-group d-flex mb-0">
+                                <span class="mr-2">vat:</span>
+                                <label class="custom-toggle mb-0">
+                                    <input type="checkbox" (click)="toggleFieldCheckbox('vat')" [checked]="data.vat">
+                                    <span class="custom-toggle-slider rounded-circle"></span>
+                                </label>
+                            </div>
+                        </div>
+                        
+                        <div class="col-md-4">
+                            <div class="form-group d-flex mb-0">
+                                <span class="mr-2">bilan sanguin:</span>
+                                <label class="custom-toggle mb-0">
+                                    <input type="checkbox" (click)="toggleFieldCheckbox('bilan_sanguin')" [checked]="data.bilan_sanguin">
+                                    <span class="custom-toggle-slider rounded-circle"></span>
+                                </label>
+                            </div>
+                        </div>
+                        
+                        <div class="col-md-4">
+                            <mat-form-field class="full-width">
+                                <mat-label>date</mat-label>
+                                <input matInput [matDatepicker]="bilan_sanguin_date_picker" [(ngModel)]="data.bilan_sanguin_date">
+                                <mat-hint>MM/DD/YYYY</mat-hint>
+                                <mat-datepicker-toggle matSuffix [for]="bilan_sanguin_date_picker"></mat-datepicker-toggle>
+                                <mat-datepicker #bilan_sanguin_date_picker></mat-datepicker>
+                            </mat-form-field>
+                        </div>
+                        
+                        <div class="col-md-4">
+                            <mat-form-field class="full-width">
+                                <mat-label>dfg</mat-label>
+                                <input matInput placeholder="bilan sanguin dfg" name="bilan_sanguin_dfg" [(ngModel)]="data.bilan_sanguin_dfg">
+                            </mat-form-field>
+                        </div>
+                        
+                        <div class="col-md-4">
+                            <mat-form-field class="full-width">
+                                <mat-label>gb</mat-label>
+                                <input matInput placeholder="bilan sanguin gb" name="bilan_sanguin_gb" [(ngModel)]="data.bilan_sanguin_gb">
+                            </mat-form-field>
+                        </div>
+                        
+                        <div class="col-md-4">
+                            <mat-form-field class="full-width">
+                                <mat-label>albumine</mat-label>
+                                <input matInput placeholder="bilan sanguin albumine" name="bilan_sanguin_albumine" [(ngModel)]="data.bilan_sanguin_albumine">
+                            </mat-form-field>
+                        </div>
+
+                        <div class="col-md-4">
+                            <mat-form-field class="full-width">
+                                <mat-label>crp</mat-label>
+                                <input matInput placeholder="bilan sanguin crp" name="bilan_sanguin_crp" [(ngModel)]="data.bilan_sanguin_crp">
+                            </mat-form-field>
+                        </div>
+                        
+                        <div class="col-md-4">
+                            <div class="form-group d-flex mb-0">
+                                <span class="mr-2">douleur:</span>
+                                <label class="custom-toggle mb-0">
+                                    <input type="checkbox" (click)="toggleFieldCheckbox('douleur')" [checked]="data.douleur">
+                                    <span class="custom-toggle-slider rounded-circle"></span>
+                                </label>
+                            </div>
+                        </div>
+                        
+                        <div class="col-md-4">
+                            <mat-form-field class="full-width">
+                                <mat-label>eva</mat-label>
+                                <input matInput placeholder="eva" name="douleur_eva" [(ngModel)]="data.douleur_eva">
+                            </mat-form-field>
+                        </div>
+                        
+                        <div class="col-md-4">
+                            <div class="form-group d-flex mb-0">
+                                <span class="mr-2">spontanée:</span>
+                                <label class="custom-toggle mb-0">
+                                    <input type="checkbox" (click)="toggleFieldCheckbox('douleur_spontanee')" [checked]="data.douleur_spontanee">
+                                    <span class="custom-toggle-slider rounded-circle"></span>
+                                </label>
+                            </div>
+                        </div>
+                        
+                        <div class="col-md-4">
+                            <div class="form-group d-flex mb-0">
+                                <span class="mr-2">provoquée:</span>
+                                <label class="custom-toggle mb-0">
+                                    <input type="checkbox" (click)="toggleFieldCheckbox('douleur_provoquee')" [checked]="data.douleur_provoquee">
+                                    <span class="custom-toggle-slider rounded-circle"></span>
+                                </label>
+                            </div>
+                        </div>
+                        
+                        <div class="col-md-4">
+                            <div class="form-group d-flex mb-0">
+                                <span class="mr-2">intermittente:</span>
+                                <label class="custom-toggle mb-0">
+                                    <input type="checkbox" (click)="toggleFieldCheckbox('douleur_intermittente')" [checked]="data.douleur_intermittente">
+                                    <span class="custom-toggle-slider rounded-circle"></span>
+                                </label>
+                            </div>
+                        </div>
+                        
+                        <div class="col-md-4">
+                            <div class="form-group d-flex mb-0">
+                                <span class="mr-2">continue:</span>
+                                <label class="custom-toggle mb-0">
+                                    <input type="checkbox" (click)="toggleFieldCheckbox('douleur_continue')" [checked]="data.douleur_continue">
+                                    <span class="custom-toggle-slider rounded-circle"></span>
+                                </label>
+                            </div>
+                        </div>
+                        
+                        <div class="col-md-4">
+                            <div class="form-group d-flex mb-0">
+                                <span class="mr-2">antalgique:</span>
+                                <label class="custom-toggle mb-0">
+                                    <input type="checkbox" (click)="toggleFieldCheckbox('antalgique')" [checked]="data.antalgique">
+                                    <span class="custom-toggle-slider rounded-circle"></span>
+                                </label>
+                            </div>
+                        </div>
+                        
+                        <div class="col-md-4">
+                            <mat-form-field class="full-width">
+                                <mat-label>niveau</mat-label>
+                                <mat-select name="antalgique_niveau" [(ngModel)]="data.antalgique_niveau">
+                                    <mat-option value="niveau I">niveau I</mat-option>
+                                    <mat-option value="niveau II">niveau II</mat-option>
+                                    <mat-option value="niveau III">niveau III</mat-option>
+                                </mat-select>
+                            </mat-form-field>
+                        </div>
+                        
+                        <div class="col-md-4">
+                            <mat-form-field class="full-width">
+                                <mat-label>plaie siege</mat-label>
+                                <input matInput placeholder="plaie siege" name="plaie_siege" [(ngModel)]="data.plaie_siege">
+                            </mat-form-field>
+                        </div>
+                        
+                        <div class="col-md-4">
+                            <mat-form-field class="full-width">
+                                <mat-label>ancienneté</mat-label>
+                                <input matInput placeholder="plaie ancienneté" name="plaie_anciennete" [(ngModel)]="data.plaie_anciennete">
+                            </mat-form-field>
+                        </div>
+                        <div class="col-md-4">
+                            <mat-form-field class="full-width">
+                                <mat-label>récidive: date du dernier épisode</mat-label>
+                                <input matInput [matDatepicker]="plaie_date_episode_picker" [(ngModel)]="data.plaie_date_episode">
+                                <mat-hint>MM/DD/YYYY</mat-hint>
+                                <mat-datepicker-toggle matSuffix [for]="plaie_date_episode_picker"></mat-datepicker-toggle>
+                                <mat-datepicker #plaie_date_episode_picker></mat-datepicker>
+                            </mat-form-field>
+                        </div>
+                        
+                        <div class="col-md-4">
+                            <div class="form-group d-flex mb-0">
+                                <span class="mr-2">spontanée:</span>
+                                <label class="custom-toggle mb-0">
+                                    <input type="checkbox" (click)="toggleFieldCheckbox('spontanee')" [checked]="data.spontanee">
+                                    <span class="custom-toggle-slider rounded-circle"></span>
+                                </label>
+                            </div>
+                        </div>
+                        
+                        <div class="col-md-4">
+                            <div class="form-group d-flex mb-0">
+                                <span class="mr-2">traumatisme:</span>
+                                <label class="custom-toggle mb-0">
+                                    <input type="checkbox" (click)="toggleFieldCheckbox('traumatisme')" [checked]="data.traumatisme">
+                                    <span class="custom-toggle-slider rounded-circle"></span>
+                                </label>
+                            </div>
+                        </div>
+                        
+                        <div class="col-md-4">
+                            <div class="form-group d-flex mb-0">
+                                <span class="mr-2">post opératoire:</span>
+                                <label class="custom-toggle mb-0">
+                                    <input type="checkbox" (click)="toggleFieldCheckbox('post_operatoire')" [checked]="data.post_operatoire">
+                                    <span class="custom-toggle-slider rounded-circle"></span>
+                                </label>
+                            </div>
+                        </div>
+                        
+                        <div class="col-md-4">
+                            <div class="form-group d-flex mb-0">
+                                <span class="mr-2">ulcère:</span>
+                                <label class="custom-toggle mb-0">
+                                    <input type="checkbox" (click)="toggleFieldCheckbox('ulcere')" [checked]="data.ulcere">
+                                    <span class="custom-toggle-slider rounded-circle"></span>
+                                </label>
+                            </div>
+                        </div>
+                        
+                        <div class="col-md-4">
+                            <div class="form-group d-flex mb-0">
+                                <span class="mr-2">veineux:</span>
+                                <label class="custom-toggle mb-0">
+                                    <input type="checkbox" (click)="toggleFieldCheckbox('veineux')" [checked]="data.veineux">
+                                    <span class="custom-toggle-slider rounded-circle"></span>
+                                </label>
+                            </div>
+                        </div>
+                        
+                        <div class="col-md-4">
+                            <div class="form-group d-flex mb-0">
+                                <span class="mr-2">artériel:</span>
+                                <label class="custom-toggle mb-0">
+                                    <input type="checkbox" (click)="toggleFieldCheckbox('arteriel')" [checked]="data.arteriel">
+                                    <span class="custom-toggle-slider rounded-circle"></span>
+                                </label>
+                            </div>
+                        </div>
+                        
+                        <div class="col-md-4">
+                            <div class="form-group d-flex mb-0">
+                                <span class="mr-2">mixte:</span>
+                                <label class="custom-toggle mb-0">
+                                    <input type="checkbox" (click)="toggleFieldCheckbox('mixte')" [checked]="data.mixte">
+                                    <span class="custom-toggle-slider rounded-circle"></span>
+                                </label>
+                            </div>
+                        </div>
+                        
+                        <div class="col-md-4">
+                            <div class="form-group d-flex mb-0">
+                                <span class="mr-2">mal perf:</span>
+                                <label class="custom-toggle mb-0">
+                                    <input type="checkbox" (click)="toggleFieldCheckbox('mal_perf')" [checked]="data.mal_perf">
+                                    <span class="custom-toggle-slider rounded-circle"></span>
+                                </label>
+                            </div>
+                        </div>
+                        
+                        <div class="col-md-4">
+                            <mat-form-field class="full-width">
+                                <mat-label>escarré stade</mat-label>
+                                <input matInput placeholder="escarré stade" name="escarre_stade" [(ngModel)]="data.escarre_stade">
+                            </mat-form-field>
+                        </div>
+                        
+                        <div class="col-md-4">
+                            <div class="form-group d-flex mb-0">
+                                <span class="mr-2">hématome:</span>
+                                <label class="custom-toggle mb-0">
+                                    <input type="checkbox" (click)="toggleFieldCheckbox('hematome')" [checked]="data.hematome">
+                                    <span class="custom-toggle-slider rounded-circle"></span>
+                                </label>
+                            </div>
+                        </div>
+                        
+                        <div class="col-md-4">
+                            <mat-form-field class="full-width">
+                                <mat-label>brulure degré</mat-label>
+                                <input matInput placeholder="brulure degré" name="brulure_degre" [(ngModel)]="data.brulure_degre">
+                            </mat-form-field>
+                        </div>
+                        <div class="col-md-4">
+                            <div class="form-group d-flex mb-0">
+                                <span class="mr-2">dermabrasion:</span>
+                                <label class="custom-toggle mb-0">
+                                    <input type="checkbox" (click)="toggleFieldCheckbox('dermabrasion')" [checked]="data.dermabrasion">
+                                    <span class="custom-toggle-slider rounded-circle"></span>
+                                </label>
+                            </div>
+                        </div>
+                        
+                        <div class="col-md-4">
+                            <mat-form-field class="full-width">
+                                <mat-label>autre</mat-label>
+                                <input matInput placeholder="autre" name="plaie_autre" [(ngModel)]="data.plaie_autre">
+                            </mat-form-field>
+                        </div>
+                        
+                        <div class="col-md-4">
+                            <div class="form-group d-flex mb-0">
+                                <span class="mr-2">soins réalisés par IDE:</span>
+                                <label class="custom-toggle mb-0">
+                                    <input type="checkbox" (click)="toggleFieldCheckbox('soins_ide')" [checked]="data.soins_ide">
+                                    <span class="custom-toggle-slider rounded-circle"></span>
+                                </label>
+                            </div>
+                        </div>
+                        
+                        <div class="col-md-4">
+                            <mat-form-field class="full-width">
+                                <mat-label>fréquence</mat-label>
+                                <input matInput placeholder="soins fréquence" name="soins_frequence" [(ngModel)]="data.soins_frequence">
+                            </mat-form-field>
+                        </div>
+                        
+                        <div class="col-md-4">
+                            <mat-form-field class="full-width">
+                                <mat-label>par jours</mat-label>
+                                <input matInput placeholder="soins fréquence jours" name="soins_frequence_jours" [(ngModel)]="data.soins_frequence_jours">
+                            </mat-form-field>
+                        </div>
+                        
+                        <div class="col-md-4">
+                            <mat-form-field class="full-width">
+                                <mat-label>pansement primaire</mat-label>
+                                <input matInput placeholder="pansement primaire" name="pansement_primaire" [(ngModel)]="data.pansement_primaire">
+                            </mat-form-field>
+                        </div>
+                        
+                        <div class="col-md-4">
+                            <div class="form-group d-flex mb-0">
+                                <span class="mr-2">pansement primaire déplacé:</span>
+                                <label class="custom-toggle mb-0">
+                                    <input type="checkbox" (click)="toggleFieldCheckbox('pansement_primaire_deplace')" [checked]="data.pansement_primaire_deplace">
+                                    <span class="custom-toggle-slider rounded-circle"></span>
+                                </label>
+                            </div>
+                        </div>
+                        
+                        <div class="col-md-4">
+                            <mat-form-field class="full-width">
+                                <mat-label>pansement primaire tenu</mat-label>
+                                <input matInput placeholder="pansement primaire tenu" name="pansement_primaire_tenue" [(ngModel)]="data.pansement_primaire_tenue">
+                            </mat-form-field>
+                        </div>
+                        
+                        <div class="col-md-4">
+                            <div class="form-group d-flex mb-0">
+                                <span class="mr-2">pansement primaire tolérance:</span>
+                                <label class="custom-toggle mb-0">
+                                    <input type="checkbox" (click)="toggleFieldCheckbox('pansement_primaire_tolerance')" [checked]="data.pansement_primaire_tolerance">
+                                    <span class="custom-toggle-slider rounded-circle"></span>
+                                </label>
+                            </div>
+                        </div>
+                        
+                        <div class="col-md-4">
+                            <mat-form-field class="full-width">
+                                <mat-label>pansement secondaire</mat-label>
+                                <input matInput placeholder="pansement secondaire" name="pansement_secondaire" [(ngModel)]="data.pansement_secondaire">
+                            </mat-form-field>
+                        </div>
+                        
+                        <div class="col-md-4">
+                            <div class="form-group d-flex mb-0">
+                                <span class="mr-2">pansement secondaire déplacé:</span>
+                                <label class="custom-toggle mb-0">
+                                    <input type="checkbox" (click)="toggleFieldCheckbox('pansement_secondaire_deplace')" [checked]="data.pansement_secondaire_deplace">
+                                    <span class="custom-toggle-slider rounded-circle"></span>
+                                </label>
+                            </div>
+                        </div>
+                        <div class="col-md-4">
+                            <mat-form-field class="full-width">
+                                <mat-label>pansement secondaire tenu</mat-label>
+                                <input matInput placeholder="pansement secondaire tenu" name="pansement_secondaire_tenue" [(ngModel)]="data.pansement_secondaire_tenue">
+                            </mat-form-field>
+                        </div>
+                        
+                        <div class="col-md-4">
+                            <div class="form-group d-flex mb-0">
+                                <span class="mr-2">pansement secondaire tolérance:</span>
+                                <label class="custom-toggle mb-0">
+                                    <input type="checkbox" (click)="toggleFieldCheckbox('pansement_secondaire_tolerance')" [checked]="data.pansement_secondaire_tolerance">
+                                    <span class="custom-toggle-slider rounded-circle"></span>
+                                </label>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div [ngClass]="{hidden_step: 1 !== active_step}">
                     <div class="row">
                         <div class="col-md-6">
                             <mat-form-field class="full-width">
@@ -62,7 +674,7 @@
                         <div class="col-md-6">
                             <mat-form-field class="full-width">
                                 <mat-label>Coloration</mat-label>
-                                <mat-select name="color" required [(ngModel)]="data.existing_colorations[colorationKey].color">
+                                <mat-select name="color{{colorationKey}}" required [(ngModel)]="data.existing_colorations[colorationKey].color">
                                     <mat-option [value]="option" *ngFor="let option of wound_colorations; track option">{{option}}</mat-option>
                                 </mat-select>
                             </mat-form-field>
@@ -70,7 +682,7 @@
                         <div class="col-md-5">
                             <mat-form-field class="full-width">
                                 <mat-label>Pourcentage</mat-label>
-                                <input matInput type="number" placeholder="Pourcentage" name="percentage" required [(ngModel)]="data.existing_colorations[colorationKey].percentage">
+                                <input matInput type="number" placeholder="Pourcentage" name="percentage{{colorationKey}}" required [(ngModel)]="data.existing_colorations[colorationKey].percentage">
                             </mat-form-field>
                         </div>
                         <div class="col-md-1 d-flex align-items-center">
@@ -86,7 +698,7 @@
                         <div class="col-md-6">
                             <mat-form-field class="full-width">
                                 <mat-label>Coloration</mat-label>
-                                <mat-select name="color" required [(ngModel)]="data.colorations[colorationKey].color">
+                                <mat-select name="color{{colorationKey}}" required [(ngModel)]="data.colorations[colorationKey].color">
                                     <mat-option [value]="option" *ngFor="let option of wound_colorations; track option">{{option}}</mat-option>
                                 </mat-select>
                             </mat-form-field>
@@ -94,7 +706,7 @@
                         <div class="col-md-5">
                             <mat-form-field class="full-width">
                                 <mat-label>Pourcentage</mat-label>
-                                <input matInput type="number" placeholder="Pourcentage" name="percentage" required [(ngModel)]="data.colorations[colorationKey].percentage">
+                                <input matInput type="number" placeholder="Pourcentage" name="percentage{{colorationKey}}" required [(ngModel)]="data.colorations[colorationKey].percentage">
                             </mat-form-field>
                         </div>
                         <div class="col-md-1 d-flex align-items-center">
@@ -102,7 +714,7 @@
                         </div>
                     </div> 
                 </div>
-                <div [ngClass]="{hidden_step: 1 !== active_step}">
+                <div [ngClass]="{hidden_step: 2 !== active_step}">
                     <div class="row">
                         <div class="col-md-6">
                             <mat-form-field class="full-width">
@@ -163,7 +775,260 @@
                     </div>
                     
                 </div>
-                <div [ngClass]="{hidden_step: 2 !== active_step}">
+                <div [ngClass]="{hidden_step: 3 !== active_step}">
+                    <div class="row ptsi-small-fields">
+                        
+                        <div class="col-md-4">
+                            <div class="form-group d-flex mb-0">
+                                <span class="mr-2">détersion mécanique:</span>
+                                <label class="custom-toggle mb-0">
+                                    <input type="checkbox" (click)="toggleFieldCheckbox('protocole_detersion')" [checked]="data.protocole_detersion">
+                                    <span class="custom-toggle-slider rounded-circle"></span>
+                                </label>
+                            </div>
+                        </div>
+                        
+                        <div class="col-md-4">
+                            <div class="form-group d-flex mb-0">
+                                <span class="mr-2">anesth locale:</span>
+                                <label class="custom-toggle mb-0">
+                                    <input type="checkbox" (click)="toggleFieldCheckbox('protocole_anesth')" [checked]="data.protocole_anesth">
+                                    <span class="custom-toggle-slider rounded-circle"></span>
+                                </label>
+                            </div>
+                        </div>
+                        
+                        <div class="col-md-4">
+                            <div class="form-group d-flex mb-0">
+                                <span class="mr-2">compresse:</span>
+                                <label class="custom-toggle mb-0">
+                                    <input type="checkbox" (click)="toggleFieldCheckbox('protocole_compresse')" [checked]="data.protocole_compresse">
+                                    <span class="custom-toggle-slider rounded-circle"></span>
+                                </label>
+                            </div>
+                        </div>
+                        
+                        <div class="col-md-4">
+                            <div class="form-group d-flex mb-0">
+                                <span class="mr-2">bistouri:</span>
+                                <label class="custom-toggle mb-0">
+                                    <input type="checkbox" (click)="toggleFieldCheckbox('protocole_bistouri')" [checked]="data.protocole_bistouri">
+                                    <span class="custom-toggle-slider rounded-circle"></span>
+                                </label>
+                            </div>
+                        </div>
+                        
+                        <div class="col-md-4">
+                            <div class="form-group d-flex mb-0">
+                                <span class="mr-2">curette:</span>
+                                <label class="custom-toggle mb-0">
+                                    <input type="checkbox" (click)="toggleFieldCheckbox('protocole_curette')" [checked]="data.protocole_curette">
+                                    <span class="custom-toggle-slider rounded-circle"></span>
+                                </label>
+                            </div>
+                        </div>
+                        
+                        <div class="col-md-4">
+                            <div class="form-group d-flex mb-0">
+                                <span class="mr-2">douleur:</span>
+                                <label class="custom-toggle mb-0">
+                                    <input type="checkbox" (click)="toggleFieldCheckbox('protocole_douleur')" [checked]="data.protocole_douleur">
+                                    <span class="custom-toggle-slider rounded-circle"></span>
+                                </label>
+                            </div>
+                        </div>
+                        
+                        <div class="col-md-4">
+                            <mat-form-field class="full-width">
+                                <mat-label>douleur eva</mat-label>
+                                <input matInput placeholder="douleur eva" name="protocole_douleur_eva" [(ngModel)]="data.protocole_douleur_eva">
+                            </mat-form-field>
+                        </div>
+                        
+                        <div class="col-md-4">
+                            <div class="form-group d-flex mb-0">
+                                <span class="mr-2">prélèvement bactério:</span>
+                                <label class="custom-toggle mb-0">
+                                    <input type="checkbox" (click)="toggleFieldCheckbox('protocole_prelevement')" [checked]="data.protocole_prelevement">
+                                    <span class="custom-toggle-slider rounded-circle"></span>
+                                </label>
+                            </div>
+                        </div>
+                        
+                        <div class="col-md-4">
+                            <div class="form-group d-flex mb-0">
+                                <span class="mr-2">écouvillon:</span>
+                                <label class="custom-toggle mb-0">
+                                    <input type="checkbox" (click)="toggleFieldCheckbox('protocole_ecouvillon')" [checked]="data.protocole_ecouvillon">
+                                    <span class="custom-toggle-slider rounded-circle"></span>
+                                </label>
+                            </div>
+                        </div>
+                        <div class="col-md-4">
+                            <div class="form-group d-flex mb-0">
+                                <span class="mr-2">curtage-écouvillonnage:</span>
+                                <label class="custom-toggle mb-0">
+                                    <input type="checkbox" (click)="toggleFieldCheckbox('protocole_curtage')" [checked]="data.protocole_curtage">
+                                    <span class="custom-toggle-slider rounded-circle"></span>
+                                </label>
+                            </div>
+                        </div>
+                        
+                        <div class="col-md-4">
+                            <div class="form-group d-flex mb-0">
+                                <span class="mr-2">biopsie:</span>
+                                <label class="custom-toggle mb-0">
+                                    <input type="checkbox" (click)="toggleFieldCheckbox('protocole_biopsie')" [checked]="data.protocole_biopsie">
+                                    <span class="custom-toggle-slider rounded-circle"></span>
+                                </label>
+                            </div>
+                        </div>
+                        
+                        <div class="col-md-4">
+                            <mat-form-field class="full-width">
+                                <mat-label>pansement primaire</mat-label>
+                                <input matInput placeholder="pansement primaire" name="protocole_pansement_primaire" [(ngModel)]="data.protocole_pansement_primaire">
+                            </mat-form-field>
+                        </div>
+                        
+                        <div class="col-md-4">
+                            <mat-form-field class="full-width">
+                                <mat-label>pansement secondaire</mat-label>
+                                <input matInput placeholder="pansement secondaire" name="protocole_pansement_secondaire" [(ngModel)]="data.protocole_pansement_secondaire">
+                            </mat-form-field>
+                        </div>
+                        
+                        <div class="col-md-4">
+                            <mat-form-field class="full-width">
+                                <mat-label>peau peri ulcéreuse</mat-label>
+                                <input matInput placeholder="peau peri" name="protocole_peau_peri" [(ngModel)]="data.protocole_peau_peri">
+                            </mat-form-field>
+                        </div>
+                        
+                        <div class="col-md-4">
+                            <div class="form-group d-flex mb-0">
+                                <span class="mr-2">contention:</span>
+                                <label class="custom-toggle mb-0">
+                                    <input type="checkbox" (click)="toggleFieldCheckbox('protocole_contention')" [checked]="data.protocole_contention">
+                                    <span class="custom-toggle-slider rounded-circle"></span>
+                                </label>
+                            </div>
+                        </div>
+                        
+                        <div class="col-md-4">
+                            <mat-form-field class="full-width">
+                                <mat-label>taille</mat-label>
+                                <mat-select name="protocole_contention_taille" [(ngModel)]="data.protocole_contention_taille">
+                                    <mat-option value="monotype along. long">monotype along. long</mat-option>
+                                    <mat-option value="monotype along. court">monotype along. court</mat-option>
+                                    <mat-option value="multi">multi</mat-option>
+                                </mat-select>
+                            </mat-form-field>
+                        </div>
+                        
+                        <div class="col-md-4">
+                            <mat-form-field class="full-width">
+                                <mat-label>type</mat-label>
+                                <input matInput placeholder="type" name="protocole_contention_type" [(ngModel)]="data.protocole_contention_type">
+                            </mat-form-field>
+                        </div>
+                        
+                        <div class="col-md-4">
+                            <mat-form-field class="full-width">
+                                <mat-label>antibiotherapie probabiliste</mat-label>
+                                <input matInput placeholder="antibiotherapie probabiliste" name="protocole_antibiotherapie" [(ngModel)]="data.protocole_antibiotherapie">
+                            </mat-form-field>
+                        </div>
+                        <div class="col-md-4">
+                            <mat-form-field class="full-width">
+                                <mat-label>dose</mat-label>
+                                <input matInput placeholder="dose" name="protocole_antibiotherapie_dose" [(ngModel)]="data.protocole_antibiotherapie_dose">
+                            </mat-form-field>
+                        </div>
+                        
+                        <div class="col-md-4">
+                            <mat-form-field class="full-width">
+                                <mat-label>durée</mat-label>
+                                <input matInput placeholder="durée" name="protocole_antibiotherapie_duree" [(ngModel)]="data.protocole_antibiotherapie_duree">
+                            </mat-form-field>
+                        </div>
+                        
+                        <div class="col-md-4">
+                            <div class="form-group d-flex mb-0">
+                                <span class="mr-2">bilan sanguin:</span>
+                                <label class="custom-toggle mb-0">
+                                    <input type="checkbox" (click)="toggleFieldCheckbox('protocole_bilan')" [checked]="data.protocole_bilan">
+                                    <span class="custom-toggle-slider rounded-circle"></span>
+                                </label>
+                            </div>
+                        </div>
+                        
+                        <div class="col-md-4">
+                            <div class="form-group d-flex mb-0">
+                                <span class="mr-2">radiographie:</span>
+                                <label class="custom-toggle mb-0">
+                                    <input type="checkbox" (click)="toggleFieldCheckbox('protocole_radiographie')" [checked]="data.protocole_radiographie">
+                                    <span class="custom-toggle-slider rounded-circle"></span>
+                                </label>
+                            </div>
+                        </div>
+                        
+                        <div class="col-md-4">
+                            <div class="form-group d-flex mb-0">
+                                <span class="mr-2">doppler veineux:</span>
+                                <label class="custom-toggle mb-0">
+                                    <input type="checkbox" (click)="toggleFieldCheckbox('protocole_doppler_veineux')" [checked]="data.protocole_doppler_veineux">
+                                    <span class="custom-toggle-slider rounded-circle"></span>
+                                </label>
+                            </div>
+                        </div>
+                        
+                        <div class="col-md-4">
+                            <div class="form-group d-flex mb-0">
+                                <span class="mr-2">doppler arteriel:</span>
+                                <label class="custom-toggle mb-0">
+                                    <input type="checkbox" (click)="toggleFieldCheckbox('protocole_doppler_arteriel')" [checked]="data.protocole_doppler_arteriel">
+                                    <span class="custom-toggle-slider rounded-circle"></span>
+                                </label>
+                            </div>
+                        </div>
+                        
+                        <div class="col-md-4">
+                            <mat-form-field class="full-width">
+                                <mat-label>consultation(s) spéciqlisée(s)</mat-label>
+                                <input matInput placeholder="consultation(s) spéciqlisée(s)" name="protocole_consultation" [(ngModel)]="data.protocole_consultation">
+                            </mat-form-field>
+                        </div>
+                        
+                        <div class="col-md-4">
+                            <div class="form-group d-flex mb-0">
+                                <span class="mr-2">photo:</span>
+                                <label class="custom-toggle mb-0">
+                                    <input type="checkbox" (click)="toggleFieldCheckbox('protocole_photo')" [checked]="data.protocole_photo">
+                                    <span class="custom-toggle-slider rounded-circle"></span>
+                                </label>
+                            </div>
+                        </div>
+                        
+                        <div class="col-md-4">
+                            <div class="form-group d-flex mb-0">
+                                <span class="mr-2">planimetrie:</span>
+                                <label class="custom-toggle mb-0">
+                                    <input type="checkbox" (click)="toggleFieldCheckbox('protocole_planimetrie')" [checked]="data.protocole_planimetrie">
+                                    <span class="custom-toggle-slider rounded-circle"></span>
+                                </label>
+                            </div>
+                        </div>
+                        
+                        <div class="col-md-12">
+                            <mat-form-field class="full-width">
+                                <mat-label>observations/atcd</mat-label>
+                                <textarea matInput placeholder="observations" name="observations" [(ngModel)]="data.observations"></textarea>
+                            </mat-form-field>
+                        </div>
+                    </div>
+                </div>
+                <div [ngClass]="{hidden_step: 4 !== active_step}">
                     <div class="col-md-12">
                         <ngx-dropzone 
                             (change)="onSelectImage($event)" 

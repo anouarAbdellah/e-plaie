@@ -1,16 +1,16 @@
 <app-base-modal [title]="title" (closingEvent)="onClose()" [showSubmit]="false" [isLoading]="isLoading">
     <form #f="ngForm">
         <div class="row">
-            <div class="col-md-12 d-flex justify-content-center mb-2">
+            <div class="col-md-12 d-flex justify-content-center mb-2" *ngIf="!selectedElement">
                 <button class="step" [ngClass]="{'active-step': key === active_step, 'no-border': key === steps.length - 1}" *ngFor="let step of steps; let key = index">
                     {{step.name}}
                 </button>
             </div>
-            <div class="col-md-12 d-flex">
+            <div class="col-md-12 d-flex" *ngIf="!selectedElement">
                 <h3>{{getActiveStepName()}}</h3>
             </div>
             <div class="col-md-12 conatiner-fluid" >
-                <div class="row" [ngClass]="{hidden_step: 0 !== active_step}">
+                <div class="row" [ngClass]="{hidden_step: 0 !== active_step && !selectedElement}">
                     <div class="col-md-6">
                         <mat-form-field class="full-width">
                             <mat-label>Cabinet</mat-label>
@@ -97,7 +97,7 @@
                         </mat-form-field>
                     </div>
                 </div>
-                <div [ngClass]="{hidden_step: 1 !== active_step}">
+                <div [ngClass]="{hidden_step: 1 !== active_step}" *ngIf="!selectedElement">
                     <div class="row">
                         <div class="col-md-12 text-right  mb-2">
                             <button type="button" mat-raised-button color="primary" (click)="addAntecedent()">
@@ -114,7 +114,7 @@
                         <div class="col-md-6">
                             <mat-form-field class="full-width">
                                 <mat-label>Type d'antécédent</mat-label>
-                                <mat-select name="type_antecedent" required [(ngModel)]="data.existing_antecedents[antecedentKey].antecedent_id">
+                                <mat-select name="type_antecedent[{{antecedentKey}}]" required [(ngModel)]="data.existing_antecedents[antecedentKey].antecedent_id">
                                     <mat-option [value]="option.id" *ngFor="let option of antecedents; track option">{{option.name}}</mat-option>
                                 </mat-select>
                             </mat-form-field>
@@ -122,13 +122,13 @@
                         <div class="col-md-6">
                             <mat-form-field class="full-width">
                                 <mat-label>Intitulé</mat-label>
-                                <input matInput placeholder="Intitulé" name="title" required [(ngModel)]="data.existing_antecedents[antecedentKey].title">
+                                <input matInput placeholder="Intitulé" name="title_antecedent[{{antecedentKey}}]" required [(ngModel)]="data.existing_antecedents[antecedentKey].title">
                             </mat-form-field>
                         </div>
                         <div class="col-md-6">
                             <mat-form-field class="full-width">
                                 <mat-label>Date de début</mat-label>
-                                <input matInput [matDatepicker]="start_date_picker" required [(ngModel)]="data.existing_antecedents[antecedentKey].start_date">
+                                <input matInput [matDatepicker]="start_date_picker" name="start_date_antecedent[{{antecedentKey}}]" required [(ngModel)]="data.existing_antecedents[antecedentKey].start_date">
                                 <mat-hint>MM/DD/YYYY</mat-hint>
                                 <mat-datepicker-toggle matSuffix [for]="start_date_picker"></mat-datepicker-toggle>
                                 <mat-datepicker #start_date_picker></mat-datepicker>
@@ -137,7 +137,7 @@
                         <div class="col-md-6">
                             <mat-form-field class="full-width">
                                 <mat-label>Date de fin</mat-label>
-                                <input matInput [matDatepicker]="end_date_picker" [(ngModel)]="data.existing_antecedents[antecedentKey].end_date">
+                                <input matInput [matDatepicker]="end_date_picker" name="end_date_antecedent[{{antecedentKey}}]" [(ngModel)]="data.existing_antecedents[antecedentKey].end_date">
                                 <mat-hint>MM/DD/YYYY</mat-hint>
                                 <mat-datepicker-toggle matSuffix [for]="end_date_picker"></mat-datepicker-toggle>
                                 <mat-datepicker #end_date_picker></mat-datepicker>
@@ -185,7 +185,7 @@
                     </div> 
                     
                 </div>
-                <div [ngClass]="{hidden_step: 2 !== active_step}">
+                <div [ngClass]="{hidden_step: 2 !== active_step}" *ngIf="!selectedElement">
                     <div class="row">
                         <div class="col-md-12 text-right mb-2">
                             <button type="button" mat-raised-button color="primary" (click)="addPrescription()">
@@ -252,7 +252,7 @@
                         </div>
                     </div> 
                 </div>
-                <div [ngClass]="{hidden_step: 3 !== active_step}">
+                <div [ngClass]="{hidden_step: 3 !== active_step}" *ngIf="!selectedElement">
                     <div class="row">
                         <div class="col-md-12 text-right  mb-2">
                             <button type="button" mat-raised-button color="primary" (click)="addBilan()">
@@ -340,15 +340,15 @@
             <div class="col-md-12 container-fluid mt-2">
                 <div class="row">
                     <div class="col-md-6">
-                        <button type="button" mat-raised-button color="primary" (click)="changeStep(false)" [disabled]="active_step <= 0">
+                        <button type="button" mat-raised-button color="primary" (click)="changeStep(false)" [disabled]="active_step <= 0 && !selectedElement">
                             Precedent
                         </button>
                     </div>
                     <div class="col-md-6 text-right">
-                        <button type="button" mat-raised-button color="primary" (click)="changeStep()" *ngIf="active_step < steps.length - 1">
+                        <button type="button" mat-raised-button color="primary" (click)="changeStep()" *ngIf="active_step < steps.length - 1 && !selectedElement">
                             Suivant
                         </button>
-                        <button type="button" mat-raised-button color="primary" (click)="onSubmit()" [disabled]="isLoading" *ngIf="active_step >= steps.length - 1">
+                        <button type="button" mat-raised-button color="primary" (click)="onSubmit()" [disabled]="isLoading" *ngIf="active_step >= steps.length - 1 || selectedElement">
                             <mat-spinner [diameter]="30" style="margin-right: 10px;" *ngIf="isLoading"></mat-spinner> Sauvegarder
                         </button>
                     </div>

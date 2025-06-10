@@ -19,6 +19,15 @@ export class PatientsService {
   create(data): Observable<any> {
     return this.http.post(`${environment.url}/api/patients`, data);
   }
+  save_antecedents(id, data): Observable<any> {
+    return this.http.post(`${environment.url}/api/patients/antecedents/${id}`, data);
+  }
+  save_perscriptions(id, data): Observable<any> {
+    return this.http.post(`${environment.url}/api/patients/perscriptions/${id}`, data);
+  }
+  save_bilans(id, data): Observable<any> {
+    return this.http.post(`${environment.url}/api/patients/bilans/${id}`, data);
+  }
   find(id): Observable<any> {
     return this.http.get(`${environment.url}/api/patients/${id}`);
   }

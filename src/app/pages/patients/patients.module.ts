@@ -25,6 +25,9 @@ import { PtsiFormComponent } from './ptsi-form/ptsi-form.component';
 import { PtsiListComponent } from './ptsi-list/ptsi-list.component';
 import { ConsultationsModule } from '../consultations/consultations.module';
 import { FullCalendarModule } from '@fullcalendar/angular';
+import { PatientBilansFormComponent } from './patient-bilans-form/patient-bilans-form.component';
+import { PatientAntecedentsFormComponent } from './patient-antecedents-form/patient-antecedents-form.component';
+import { PatientPrescriptionsFormComponent } from './patient-prescriptions-form/patient-prescriptions-form.component';
 
 
 @NgModule({
@@ -34,7 +37,10 @@ import { FullCalendarModule } from '@fullcalendar/angular';
     PatientsDetailsComponent,
     WoundsFormComponent,
     PtsiFormComponent,
-    PtsiListComponent
+    PtsiListComponent,
+    PatientBilansFormComponent,
+    PatientAntecedentsFormComponent,
+    PatientPrescriptionsFormComponent
   ],
   imports: [
     CommonModule,
