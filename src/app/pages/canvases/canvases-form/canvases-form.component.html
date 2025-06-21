@@ -70,7 +70,7 @@
                     <span draggable="true" (dragstart)="dragStart($event)">{{"{dateRupture}"}}</span>
                 </div>
                 <label>En-tête</label>
-                <ckeditor required name="head" [(ngModel)]="data.head" placeholder="En-tête" #head="ngModel"></ckeditor>
+                <ckeditor [config]="{versionCheck: false}" required name="head" [(ngModel)]="data.head" placeholder="En-tête" #head="ngModel"></ckeditor>
                 <div class="error-message" *ngIf="head.invalid && head.touched">
                     En-tête est requis.
                 </div>
@@ -88,7 +88,7 @@
                     <span draggable="true" (dragstart)="dragStart($event)">{{"{dateRupture}"}}</span>
                 </div>
                 <label>Corp</label>
-                <ckeditor required name="body" [(ngModel)]="data.body" placeholder="Corp" #body="ngModel"></ckeditor>
+                <ckeditor [config]="{versionCheck: false}" required name="body" [(ngModel)]="data.body" placeholder="Corp" #body="ngModel"></ckeditor>
                 <div class="error-message" *ngIf="body.invalid && body.touched">
                     Corp est requis.
                 </div>
@@ -106,7 +106,7 @@
                     <span draggable="true" (dragstart)="dragStart($event)">{{"{dateRupture}"}}</span>
                 </div>
                 <label>Bas de page</label>
-                <ckeditor required name="footer" [(ngModel)]="data.footer" placeholder="Bas de page" #footer="ngModel"></ckeditor>
+                <ckeditor [config]="{versionCheck: false}" required name="footer" [(ngModel)]="data.footer" placeholder="Bas de page" #footer="ngModel"></ckeditor>
                 <div class="error-message" *ngIf="footer.invalid && footer.touched">
                     Bas de page est requis.
                 </div>
