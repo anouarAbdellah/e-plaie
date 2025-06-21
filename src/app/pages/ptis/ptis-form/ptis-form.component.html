@@ -82,7 +82,7 @@
                 </div>
             </div>
             <div class="col-md-12">
-                <ckeditor required name="description" [(ngModel)]="data.description" placeholder="Description" #description="ngModel"></ckeditor>
+                <ckeditor required [config]="{versionCheck: false}" name="description" [(ngModel)]="data.description" placeholder="Description" #description="ngModel"></ckeditor>
                 <div class="error-message" *ngIf="description.invalid && description.touched">
                     Description est requis.
                 </div>

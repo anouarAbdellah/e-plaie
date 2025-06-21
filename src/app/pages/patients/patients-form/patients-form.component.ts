@@ -225,17 +225,25 @@ export class PatientsFormComponent implements OnInit {
 
   onError(error) {
     this.isLoading = false;
-    let errorDetails = error.error.data;
-    for (let errorKey in errorDetails)
-      this._snackBar.open(errorDetails[errorKey], 'Ok', {
+    if (typeof error === "string") {
+      this._snackBar.open(error, 'Ok', {
         horizontalPosition: this.horizontalPosition,
         verticalPosition: this.verticalPosition,
         panelClass: ['danger-snackbar']
       });
+    } else {
+      let errorDetails = error.error.data;
+      for (let errorKey in errorDetails)
+        this._snackBar.open(errorDetails[errorKey], 'Ok', {
+          horizontalPosition: this.horizontalPosition,
+          verticalPosition: this.verticalPosition,
+          panelClass: ['danger-snackbar']
+        });
+    }
   }
 
   onCabinetChange(cabinet_id) {
-    this.doctors = this.all_doctors.filter(el => el.cabinet_id === cabinet_id);
+    this.doctors = this.all_doctors.filter(el => el.cabinet_id == cabinet_id);
   }
 
   getActiveStepName() {
@@ -244,6 +252,18 @@ export class PatientsFormComponent implements OnInit {
 
   changeStep(forward = true) {
     if (forward && this.active_step < this.steps.length - 1) {
+      if (this.active_step === 0) {
+        const controls = Object.values(this.form.controls);
+        for(let control of controls) {
+          if(control.invalid) {
+            control.markAsTouched();
+          }
+        }
+        if (this.form.invalid) {
+          this.onError("Veuillez remplir tous les champs obligatoires");
+          return;
+        }
+      }
       this.active_step++;
     } else if (!forward && this.active_step > 0) {
       this.active_step--;
